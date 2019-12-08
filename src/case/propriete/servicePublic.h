@@ -1,0 +1,14 @@
+//
+//
+//
+
+#ifndef L3_MIAGE_MONOPOLY_SERVICEPUBLIC_H
+#define L3_MIAGE_MONOPOLY_SERVICEPUBLIC_H
+
+
+class servicePublic {
+
+};
+
+
+#endif //L3_MIAGE_MONOPOLY_SERVICEPUBLIC_H

@@ -1,0 +1,14 @@
+//
+//
+//
+
+#ifndef L3_MIAGE_MONOPOLY_FLUXMONETAIRE_H
+#define L3_MIAGE_MONOPOLY_FLUXMONETAIRE_H
+
+
+class fluxMonetaire {
+
+};
+
+
+#endif //L3_MIAGE_MONOPOLY_FLUXMONETAIRE_H

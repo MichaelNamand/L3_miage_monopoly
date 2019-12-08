@@ -3,4 +3,4 @@ project(L3_miage_monopoly)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(L3_miage_monopoly main.cpp)
+add_executable(L3_miage_monopoly main.cpp src/carte/carte.cpp src/carte/carte.h src/carte/carteAllerEnPrison.cpp src/carte/carteAllerEnPrison.h src/carte/cartesDeplacement.cpp src/carte/cartesDeplacement.h src/carte/cartesFlux.cpp src/carte/cartesFlux.h src/carte/cartesSortiePrison.cpp src/carte/cartesSortiePrison.h src/case/case.cpp src/case/case.h src/case/pioche.cpp src/case/pioche.h src/case/fluxMonetaire.cpp src/case/fluxMonetaire.h src/case/attente.cpp src/case/attente.h src/case/allerEnPrison.cpp src/case/allerEnPrison.h src/case/propriete/propriete.cpp src/case/propriete/propriete.h src/case/propriete/rue.cpp src/case/propriete/rue.h src/case/propriete/gare.cpp src/case/propriete/gare.h src/case/propriete/servicePublic.cpp src/case/propriete/servicePublic.h src/case/propriete/groupeCouleur.cpp src/case/propriete/groupeCouleur.h src/joueur/joueur.cpp src/joueur/joueur.h src/pion/pion.cpp src/pion/pion.h src/plateau/plateau.cpp src/plateau/plateau.h)

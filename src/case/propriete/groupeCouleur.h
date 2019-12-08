@@ -1,0 +1,14 @@
+//
+//
+//
+
+#ifndef L3_MIAGE_MONOPOLY_GROUPECOULEUR_H
+#define L3_MIAGE_MONOPOLY_GROUPECOULEUR_H
+
+
+class groupeCouleur {
+
+};
+
+
+#endif //L3_MIAGE_MONOPOLY_GROUPECOULEUR_H

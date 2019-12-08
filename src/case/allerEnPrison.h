@@ -1,0 +1,14 @@
+//
+//
+//
+
+#ifndef L3_MIAGE_MONOPOLY_ALLERENPRISON_H
+#define L3_MIAGE_MONOPOLY_ALLERENPRISON_H
+
+
+class allerEnPrison {
+
+};
+
+
+#endif //L3_MIAGE_MONOPOLY_ALLERENPRISON_H
