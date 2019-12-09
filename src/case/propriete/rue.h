@@ -7,6 +7,8 @@
 
 
 class rue {
+private:
+    int nbMaisons;
 
 };
 
