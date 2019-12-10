@@ -1,0 +1,14 @@
+//
+//
+//
+
+#ifndef L3_MIAGE_MONOPOLY_CARTEDEPLACEMENT_H
+#define L3_MIAGE_MONOPOLY_CARTEDEPLACEMENT_H
+
+
+class carteDeplacement {
+
+};
+
+
+#endif //L3_MIAGE_MONOPOLY_CARTEDEPLACEMENT_H

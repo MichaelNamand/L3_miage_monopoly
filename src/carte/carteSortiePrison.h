@@ -1,0 +1,14 @@
+//
+//
+//
+
+#ifndef L3_MIAGE_MONOPOLY_CARTESORTIEPRISON_H
+#define L3_MIAGE_MONOPOLY_CARTESORTIEPRISON_H
+
+
+class carteSortiePrison {
+
+};
+
+
+#endif //L3_MIAGE_MONOPOLY_CARTESORTIEPRISON_H
