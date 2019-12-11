@@ -1,15 +1,22 @@
 //
 //
 //
+#include <vector>
+#include "propriete.h"
 
 #ifndef L3_MIAGE_MONOPOLY_RUE_H
 #define L3_MIAGE_MONOPOLY_RUE_H
 
 
-class rue {
+class rue: public propriete {
 private:
-    int nbMaisons;
+    int d_nbMaisons = 0;
+    int d_nbHotels = 0;
 
+public:
+    int getNbMaisons() const;
+    int getNbHotels() const;
+    int getLoyer(int index) override;
 };
 
 
