@@ -22,7 +22,7 @@ public:
     void sortirDePrison(joueur j);
     int* lancerDes(joueur j) const;
     void mettreAuxEncheres();
-    vector<propriete> proprietesRestantes() const;
+    vector<caseMonopoly> proprietesRestantes() const;
     void lancerEchange();
 
 private:
