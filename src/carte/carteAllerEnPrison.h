@@ -7,6 +7,8 @@
 
 
 class carteAllerEnPrison {
+public:
+
 
 };
 
