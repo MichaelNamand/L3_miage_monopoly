@@ -16,7 +16,7 @@ using std::vector;
 
 class plateau {
 public:
-    vector<case> casesDisponibles() const;
+    vector<caseMonopoly> casesDisponibles() const;
     bool estCaseDisponible() const;
     void carteChance(joueur j);
     void carteCommunaute(joueur j);
@@ -28,7 +28,7 @@ public:
 
 private:
     vector<vector<carte>> d_pioches;
-    vector<case> d_cases;
+    vector<caseMonopoly> d_cases;
 };
 
 
