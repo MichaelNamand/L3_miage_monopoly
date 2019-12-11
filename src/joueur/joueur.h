@@ -18,6 +18,7 @@ public:
     bool estEnPrison() const;
     const string& getNom() const;
     int getArgent() const;
+    int getIndexCase() const;
     const vector<carteSortiePrison> &getCartesSortiePrison() const;
     const vector<propriete> &getProprietes() const;
     const vector<propriete> &getRues() const;
