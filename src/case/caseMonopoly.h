@@ -1,0 +1,13 @@
+//
+//
+//
+
+#ifndef L3_MIAGE_MONOPOLY_CASEMONOPOLY_H
+#define L3_MIAGE_MONOPOLY_CASEMONOPOLY_H
+
+class caseMonopoly {
+
+};
+
+
+#endif //L3_MIAGE_MONOPOLY_CASEMONOPOLY_H

@@ -7,7 +7,7 @@
 
 #include <vector>
 #include "../carte/carte.h"
-#include "../case/case.h"
+#include "../case/caseMonopoly.h"
 #include "../joueur/joueur.h"
 #include "../case/propriete/propriete.h"
 
