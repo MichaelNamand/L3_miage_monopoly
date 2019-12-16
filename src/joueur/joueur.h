@@ -16,17 +16,32 @@ using std::vector;
 class joueur {
 public:
     bool estEnPrison() const;
-    const string& getNom() const;
+
+    string getNom() const;
+
     int getArgent() const;
+
     int getIndexCase() const;
-    const vector<carteSortiePrison> &getCartesSortiePrison() const;
-    const vector<propriete> &getProprietes() const;
-    const vector<propriete> &getRues() const;
-    const vector<propriete> &getGares() const;
-    const vector<propriete> &getServicePublic() const;
-    void vendreMaison();
+
+    vector<carteSortiePrison> getCartesSortiePrison() const;
+
+    vector<propriete> getPropriete(string typeNom) const;
+
+    void ajouterPropriete(propriete &propriete);
+
+    void vendrePropriete(joueur j);
+
     void hypothequer();
+
     void seDeplacer(int nbCases);
+
+    void ajouterCartePrison(carteSortiePrison &carte);
+
+    void utiliserCartePrison();
+
+    void operation(int argent);
+
+    void mettreEnPrison(bool prison);
 
 
 private:
@@ -36,6 +51,7 @@ private:
     int d_indexCase;
     vector<carteSortiePrison> d_cartesSortiePrison;
     vector<propriete> d_proprietes;
+    vector<carteSortiePrison> d_carteSortiePrison;
 };
 
 

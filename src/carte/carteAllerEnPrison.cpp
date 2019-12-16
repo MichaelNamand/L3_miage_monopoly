@@ -15,13 +15,9 @@ void carteAllerEnPrison::action(joueur j) {
         std::cout << "Deja en prison";
 
     } else {
-        if (tmp < casePrison) {
-            j.seDeplacer(casePrison - tmp);
-        } else {
+        j.seDeplacer(casePrison - tmp);
 
-            j.seDeplacer(tmp - casePrison);
-        }
-        j.setEnPrison(true);
+        j.mettreEnPrison(true);
 
     }
 
