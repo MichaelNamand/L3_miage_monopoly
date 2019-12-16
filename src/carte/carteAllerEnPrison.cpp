@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "carteAllerEnPrison.h"
+#include "../joueur/joueur.h"
 
 carteAllerEnPrison::carteAllerEnPrison(const string &texte) :
         carte{texte} {}
@@ -21,7 +22,7 @@ void carteAllerEnPrison::action(joueur j) {
 
             j.seDeplacer(tmp - casePrison);
         }
-        j.setEnPrison(true);
+        // j.setEnPrison(true);
 
     }
 
