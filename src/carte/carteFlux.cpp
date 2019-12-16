@@ -10,5 +10,6 @@ carteFlux::carteFlux(const string &texte, int flux) :
         d_flux{flux} {}
 
 void carteFlux::action(joueur j) {
-    // j.setArgent(j.getArgent() + d_flux);
+
+    j.operation(j.getArgent() + d_flux);
 }
