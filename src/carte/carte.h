@@ -6,7 +6,7 @@
 #define L3_MIAGE_MONOPOLY_CARTE_H
 
 #include <string>
-#include "../joueur/joueur.h"
+class joueur;
 
 using std::string;
 class carte {

@@ -6,8 +6,15 @@
 #define L3_MIAGE_MONOPOLY_ATTENTE_H
 
 
-class attente {
+#include "caseMonopoly.h"
 
+class attente : public caseMonopoly{
+public:
+    attente();
+
+    ~attente();
+
+    virtual void action() override;
 };
 
 

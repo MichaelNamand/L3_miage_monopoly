@@ -6,7 +6,15 @@
 #define L3_MIAGE_MONOPOLY_FLUXMONETAIRE_H
 
 
-class fluxMonetaire {
+#include "caseMonopoly.h"
+
+class fluxMonetaire : public caseMonopoly {
+public:
+    fluxMonetaire();
+
+    virtual ~fluxMonetaire();
+
+    virtual void action() override;
 
 };
 

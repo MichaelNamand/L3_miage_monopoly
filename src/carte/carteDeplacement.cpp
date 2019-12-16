@@ -3,6 +3,7 @@
 //
 
 #include "carteDeplacement.h"
+#include "../joueur/joueur.h"
 
 
 carteDeplacement::carteDeplacement(const string &texte, int cases) :
