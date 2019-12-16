@@ -12,11 +12,10 @@ class carteDeplacement : public carte {
 public:
     carteDeplacement(const string &texte, int cases);
 
-    void action(joueur joueur) override;
+    void action(joueur j) override;
 
 
 private:
-    string d_texte;
     int d_cases;
 
 

@@ -6,8 +6,13 @@
 #define L3_MIAGE_MONOPOLY_CARTEALLERENPRISON_H
 
 
-class carteAllerEnPrison {
+#include "carte.h"
+
+class carteAllerEnPrison : public carte {
 public:
+    carteAllerEnPrison(const string &texte);
+
+    void action(joueur joueur) override;
 
 
 };
