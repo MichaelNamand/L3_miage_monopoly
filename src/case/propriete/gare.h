@@ -11,8 +11,8 @@
 class gare: public propriete {
 
 public:
-    gare(std::vector<int> loyers);
-    int getLoyer(int index) override;
+    gare(std::string &nom, int valeurHypotheque, int prix, std::vector<int> loyers);
+    void action(joueur *j) override;
 };
 
 

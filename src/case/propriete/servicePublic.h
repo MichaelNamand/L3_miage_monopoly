@@ -11,8 +11,9 @@
 
 class servicePublic: public propriete {
 public:
-    servicePublic(std::string nom, std::vector<int> loyers);
-    int getLoyer(int index) override;
+    servicePublic(std::string nom, int valeurHypotheque, int prix, std::vector<int> loyers);
+    int getLoyer() const override;
+    void action(joueur *j) override;
 };
 
 
