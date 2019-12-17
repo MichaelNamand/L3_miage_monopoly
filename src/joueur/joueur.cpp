@@ -8,7 +8,7 @@ bool joueur::estEnPrison() const {
     return d_enPrison;
 }
 
-string joueur::getNom() const {
+const string &joueur::getNom() const {
     return d_nom;
 }
 
@@ -20,36 +20,42 @@ int joueur::getIndexCase() const {
     return d_indexCase;
 }
 
-vector<carteSortiePrison> joueur::getCartesSortiePrison() const {
+const vector<carteSortiePrison> &joueur::getCartesSortiePrison() const {
     return d_cartesSortiePrison;
 }
 
-void joueur::ajouterPropriete(propriete &propriete) {
-    d_proprietes.push_back(propriete);
+const vector<propriete> &joueur::getProprietes() const {
+    return d_proprietes;
 }
 
-
-vector<propriete> joueur::getPropriete(string typeNom) const {
-    vector<propriete> tableauTemporaire;
-    int i=0;
-    for(int i=0; i < d_proprietes.size(); ++i){
-        if(typeNom == d_proprietes.getType()){
-            tableauTemporaire.push_back(d_proprietes[i]);
+const vector<propriete> &joueur::getRues() const {
+    vector<propriete()> p;
+    for(int i=0;i<d_proprietes.size();i++) {
+        if(d_proprietes[i].getType() == DT_RUES) {
+            if(d_proprietes[i].getJoueur() != nullptr) {
+                p.push_back(d_proprietes[i]);
+            }
         }
-
     }
+    return p;
+}
+
+const vector<propriete> &joueur::getGares() const {
+    return <#initializer#>;
+}
+
+const vector<propriete> &joueur::getServicePublic() const {
+    return <#initializer#>;
+}
+
+void joueur::vendreMaison() {
 
 }
 
-void joueur::setEnPrison(bool prison) {
-    d_enPrison = prison;
+void joueur::hypothequer() {
+
 }
 
-void joueur::operation(int argent) {
-    d_argent = d_argent + argent;
-}
+void joueur::seDeplacer(int nbCases) {
 
-void joueur::ajouterCartePrison(carteSortiePrison &carte) {
-    d_cartesSortiePrison.push_back(carte);
 }
-
