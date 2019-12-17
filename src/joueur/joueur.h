@@ -35,6 +35,8 @@ public:
 
     void seDeplacer(int nbCases);
 
+    void deplacerA(int indexCase, bool enAvancant);
+
     void ajouterCartePrison(carteSortiePrison &carte);
 
     void utiliserCartePrison();
@@ -42,6 +44,8 @@ public:
     void operation(int argent);
 
     void mettreEnPrison(bool prison);
+
+    void gagnerSalaire();
 
 
 private:

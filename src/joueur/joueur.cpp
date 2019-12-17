@@ -20,6 +20,8 @@ int joueur::getIndexCase() const {
     return d_indexCase;
 }
 
+
+
 const vector<carteSortiePrison> &joueur::getCartesSortiePrison() const {
     return d_cartesSortiePrison;
 }
@@ -58,4 +60,14 @@ void joueur::hypothequer() {
 
 void joueur::seDeplacer(int nbCases) {
 
+}
+
+void joueur::gagnerSalaire() {
+    d_argent += 200;
+}
+
+void joueur::deplacerA(int indexCase, bool enAvancant) {
+    if(enAvancant && indexCase < d_indexCase)
+        gagnerSalaire();
+    d_indexCase = indexCase;
 }
