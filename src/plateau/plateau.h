@@ -20,7 +20,7 @@ public:
     void carteChance(joueur j);
     void carteCommunaute(joueur j);
     void sortirDePrison(joueur j);
-    int* lancerDes(joueur j) const;
+    vector<int> lancerDes(joueur j) const;
     void mettreAuxEncheres();
     vector<caseMonopoly> proprietesRestantes() const;
     void lancerEchange();

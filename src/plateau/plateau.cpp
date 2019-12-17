@@ -3,6 +3,7 @@
 //
 
 #include "plateau.h"
+#include <cstdlib>
 
 plateau::plateau() {
 
@@ -17,11 +18,16 @@ void plateau::carteCommunaute(joueur j) {
 }
 
 void plateau::sortirDePrison(joueur j) {
-
+    j.mettreEnPrison(false);
+    j.deplacerA(10); //se déplace sur la case visite de prison
 }
 
-int *plateau::lancerDes(joueur j) const {
-    return nullptr;
+vector<int> plateau::lancerDes(joueur j) const {
+    srand (time(NULL));
+    vector<int> des;
+    des.push_back(rand() % 6 + 1);
+    des.push_back(rand() % 6 + 1);
+    return des;
 }
 
 void plateau::mettreAuxEncheres() {
