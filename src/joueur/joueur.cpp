@@ -71,3 +71,7 @@ void joueur::deplacerA(int indexCase, bool enAvancant) {
         gagnerSalaire();
     d_indexCase = indexCase;
 }
+
+void joueur::mettreEnPrison(bool prison) {
+    d_enPrison = prison;
+}
