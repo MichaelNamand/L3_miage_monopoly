@@ -19,7 +19,7 @@ void plateau::carteCommunaute(joueur j) {
 
 void plateau::sortirDePrison(joueur j) {
     j.mettreEnPrison(false);
-    j.deplacerA(10); //se déplace sur la case visite de prison
+    j.deplacerA(10, false); //se déplace sur la case visite de prison
 }
 
 vector<int> plateau::lancerDes(joueur j) const {
