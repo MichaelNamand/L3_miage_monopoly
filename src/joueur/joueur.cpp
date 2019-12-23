@@ -42,6 +42,14 @@ const vector<propriete> &joueur::getRues() const {
     return p;
 }
 
+vector<int> joueur::lancerDes() const {
+    srand (time(NULL));
+    vector<int> des;
+    des.push_back(rand() % 6 + 1);
+    des.push_back(rand() % 6 + 1);
+    return des;
+}
+
 const vector<propriete> &joueur::getGares() const {
     return <#initializer#>;
 }

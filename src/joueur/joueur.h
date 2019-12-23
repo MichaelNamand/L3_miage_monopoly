@@ -47,6 +47,8 @@ public:
 
     void gagnerSalaire();
 
+    vector<int> lancerDes() const;
+
 
 private:
     string d_nom;
