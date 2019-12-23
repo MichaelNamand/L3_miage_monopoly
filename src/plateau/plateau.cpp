@@ -9,14 +9,6 @@ plateau::plateau() {
 
 }
 
-void plateau::carteChance(joueur j) {
-
-}
-
-void plateau::carteCommunaute(joueur j) {
-
-}
-
 void plateau::sortirDePrison(joueur j) {
     j.mettreEnPrison(false);
     j.deplacerA(10, false); //se déplace sur la case visite de prison
@@ -30,9 +22,6 @@ vector<int> plateau::lancerDes(joueur j) const {
     return des;
 }
 
-void plateau::mettreAuxEncheres() {
-
-}
 
 vector<caseMonopoly> plateau::proprietesRestantes() const {
     vector<caseMonopoly> p;
@@ -44,9 +33,5 @@ vector<caseMonopoly> plateau::proprietesRestantes() const {
         }
     }
     return p;
-}
-
-void plateau::lancerEchange() {
-
 }
 

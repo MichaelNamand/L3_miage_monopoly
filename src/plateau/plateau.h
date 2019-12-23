@@ -17,14 +17,10 @@ using std::vector;
 class plateau {
 public:
     plateau();
-    void carteChance(joueur j);
-    void carteCommunaute(joueur j);
     void sortirDePrison(joueur j);
     vector<int> lancerDes(joueur j) const;
-    void mettreAuxEncheres();
     vector<caseMonopoly> proprietesRestantes() const;
-    void lancerEchange();
-
+    
 private:
     vector<vector<carte>> d_pioches;
     vector<caseMonopoly> d_cases;
