@@ -18,7 +18,6 @@ class plateau {
 public:
     plateau();
     void sortirDePrison(joueur j);
-    vector<int> lancerDes(joueur j) const;
     vector<caseMonopoly> proprietesRestantes() const;
     
 private:
