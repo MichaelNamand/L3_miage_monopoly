@@ -17,7 +17,7 @@ using std::string;
 
 class caseMonopoly {
 public :
-    caseMonopoly(const string& nom, const int type);
+    caseMonopoly(const string& nom, int type);
 
     virtual ~caseMonopoly();
 

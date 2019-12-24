@@ -10,7 +10,7 @@
 
 class attente : public caseMonopoly{
 public:
-    attente();
+    attente(const string& nom, int type);
 
     ~attente();
 

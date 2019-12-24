@@ -10,7 +10,7 @@
 
 class fluxMonetaire : public caseMonopoly {
 public:
-    fluxMonetaire();
+    fluxMonetaire(const string& nom, int type);
 
     virtual ~fluxMonetaire();
 
