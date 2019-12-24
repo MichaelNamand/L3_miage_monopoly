@@ -7,8 +7,8 @@
 
 
 #include "caseMonopoly.h"
-#include "../carte/carte.h"
-#include <vector>
+#include "../plateau/plateau.h"
+#include "../joueur/joueur.h"
 
 class pioche : public caseMonopoly{
 public:
@@ -16,11 +16,8 @@ public:
 
     virtual ~pioche();
 
-    virtual void action() override;   //pioche et affiche la carte
+    virtual void action(plateau& p, joueur& j) override;   //pioche et affiche la carte
 
-private :
-    vector <vector<carte*>> d_cartesPlateau;
-    unsigned d_indexPioche[2];
 };
 
 

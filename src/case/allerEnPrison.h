@@ -16,7 +16,7 @@ public :
 
     virtual ~allerEnPrison();
 
-    virtual void action(joueur joueur) override; //emmenerEnPrison
+    virtual void action(joueur& j) override; //emmenerEnPrison
 
 
 };

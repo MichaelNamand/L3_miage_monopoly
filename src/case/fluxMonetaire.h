@@ -7,6 +7,7 @@
 
 
 #include "caseMonopoly.h"
+#include "../joueur/joueur.h"
 
 class fluxMonetaire : public caseMonopoly {
 public:
@@ -14,7 +15,7 @@ public:
 
     virtual ~fluxMonetaire();
 
-    virtual void action() override;
+    virtual void action(joueur& j) override;
 
 };
 
