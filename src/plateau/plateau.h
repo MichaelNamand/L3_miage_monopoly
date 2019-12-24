@@ -19,9 +19,14 @@ public:
     plateau();
     void sortirDePrison(joueur j);
     vector<caseMonopoly> proprietesRestantes() const;
+    const vector<carte>& getPiocheChance() const;
+    const vector<carte>& getPiocheCaisseCommunaute() const;
+    void piocherCarteChance(joueur& j);
+    void piocherCarteCaisseCommunaute(joueur& j);
     
 private:
-    vector<vector<carte>> d_pioches;
+    vector<carte> d_piocheCaisseCommunaute;
+    vector<carte> d_piocheChance;
     vector<caseMonopoly> d_cases;
 };
 
