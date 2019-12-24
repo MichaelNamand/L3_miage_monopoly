@@ -14,7 +14,6 @@ void plateau::sortirDePrison(joueur j) {
     j.deplacerA(10, false); //se déplace sur la case visite de prison
 }
 
-
 vector<caseMonopoly> plateau::proprietesRestantes() const {
     vector<caseMonopoly> p;
     for(int i=0;i<d_cases.size();i++) {
@@ -25,5 +24,27 @@ vector<caseMonopoly> plateau::proprietesRestantes() const {
         }
     }
     return p;
+}
+
+const queue<carte> &plateau::getPiocheChance() const {
+    return d_piocheChance;
+}
+
+const queue<carte> &plateau::getPiocheCaisseCommunaute() const {
+    return d_piocheCaisseCommunaute;
+}
+
+void plateau::piocherCarteChance(joueur &j) {
+    carte cartePiochee = d_piocheChance.front();
+    d_piocheChance.pop();
+    cartePiochee.action(j);
+    d_piocheChance.push(cartePiochee);
+}
+
+void plateau::piocherCarteCaisseCommunaute(joueur &j) {
+    carte cartePiochee = d_piocheCaisseCommunaute.front();
+    d_piocheCaisseCommunaute.pop();
+    cartePiochee.action(j);
+    d_piocheCaisseCommunaute.push(cartePiochee);
 }
 
