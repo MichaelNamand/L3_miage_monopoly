@@ -22,3 +22,8 @@ int rue::getLoyer() const {
     }
     return d_loyers[d_nbMaisons + d_nbHotels] * multiplicateur;
 }
+
+void rue::action(joueur *j) {
+    propriete::action(j);
+    propriete::choixActions(getLoyer());
+}
