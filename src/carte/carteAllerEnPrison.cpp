@@ -17,7 +17,7 @@ void carteAllerEnPrison::action(joueur j) {
     } else {
         j.seDeplacer(casePrison - tmp);
 
-        j.mettreEnPrison(true);
+        j.setEnPrison(true);
 
     }
 

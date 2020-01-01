@@ -29,21 +29,22 @@ public:
 
     void ajouterPropriete(propriete &propriete);
 
-    void vendrePropriete(joueur j);
+    void vendrePropriete(joueur j, int numeroPropriete, int prixDeVente);
 
-    void hypothequer();
-
-    void seDeplacer(int nbCases);
+    void hypothequerProptieter(int numeroPropriete);
 
     void deplacerA(int indexCase, bool enAvancant);
 
-    void ajouterCartePrison(carteSortiePrison &carte);
+    void ajouterCartePrison();
 
     void utiliserCartePrison();
 
     void operation(int argent);
 
-    void mettreEnPrison(bool prison);
+
+    void setEnPrison(int tour);
+
+    int getTourEnPrison() const;
 
     void gagnerSalaire();
 
@@ -53,11 +54,12 @@ public:
 private:
     string d_nom;
     int d_argent;
-    bool d_enPrison;
     int d_indexCase;
+    int d_nbTourPrison;
     vector<carteSortiePrison> d_cartesSortiePrison;
     vector<propriete> d_proprietes;
-    vector<carteSortiePrison> d_carteSortiePrison;
+    vector<propriete> d_proprietesHypothequer
+
 };
 
 
