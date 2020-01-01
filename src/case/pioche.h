@@ -16,7 +16,7 @@ public:
 
     virtual ~pioche();
 
-    virtual void action(plateau& p, joueur& j) override;   //pioche et affiche la carte
+    virtual void action(joueur& j) override;   //pioche et affiche la carte
 
 };
 

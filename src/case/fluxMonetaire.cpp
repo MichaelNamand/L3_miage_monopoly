@@ -3,8 +3,11 @@
 //
 
 #include "fluxMonetaire.h"
+#include <iostream>
 
-fluxMonetaire::fluxMonetaire(const string &nom, int type) {}
+using std::cout;
+
+fluxMonetaire::fluxMonetaire(const string &nom, int type): caseMonopoly{nom, type} {}
 
 fluxMonetaire::~fluxMonetaire() {}
 

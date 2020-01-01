@@ -10,14 +10,14 @@ pioche::pioche(const string& nom, int type) : caseMonopoly{nom,type}
 
 pioche::~pioche() {}
 
-void pioche::action(plateau& p, joueur& j) {
+void pioche::action(joueur& j) {
 
    if(afficheCase() == "Carte chance")
    {
-        p.piocherCarteChance(j);
+        // p.piocherCarteChance(j);
    }
    else
    {
-       p.piocherCarteCommunaute(j);
+       // p.piocherCarteCommunaute(j);
    }
 }

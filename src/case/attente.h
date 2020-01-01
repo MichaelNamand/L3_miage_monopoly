@@ -14,7 +14,7 @@ public:
 
     ~attente();
 
-    virtual void action() override;
+    virtual void action(joueur &j) override;
 };
 
 
