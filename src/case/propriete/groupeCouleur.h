@@ -7,14 +7,24 @@
 
 #include <string>
 
+#define DT_BLEU "Bleu"
+#define DT_BLEU_CIEL "Bleu ciel"
+#define DT_ROUGE "Rouge"
+#define DT_VERT "Vert"
+#define DT_JAUNE "Jaune"
+#define DT_ORANGE "Orange"
+#define DT_ROSE "Rose"
+#define DT_MARRON "Marron"
+using namespace std;
 class groupeCouleur {
 private:
     std::string d_couleur;
     int d_nbMaxCouleurs;
 
 public:
-    groupeCouleur(std::string &couleur, int nbMaxCouleurs);
+    groupeCouleur(const std::string &couleur, int nbMaxCouleurs);
     bool sontToutesPossedeesParJoueur() const;
+    string getCouleur() const;
 };
 
 

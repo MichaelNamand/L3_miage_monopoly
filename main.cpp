@@ -1,6 +1,24 @@
 #include <iostream>
+#include <limits>
+#include "src/joueur/joueur.h"
+#include "src/plateau/plateau.h"
+#include "src/jeu.h"
+
+using namespace std;
+
+
+void afficherListeJoueurs(vector<joueur> &joueurs) {
+    cout << "Liste des joueurs inscrits : " << endl;
+    for (int i = 0; i < joueurs.size(); i++) {
+        cout << i + 1 << ". " << joueurs[i].getNom() << endl;
+    }
+}
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    plateau plateauMonopoly{};
+    jeu j{plateauMonopoly};
+    j.lancerJeu();
     return 0;
 }
+
+

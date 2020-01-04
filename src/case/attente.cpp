@@ -14,5 +14,5 @@ attente::~attente() {}
 
 void attente::action(joueur &j) {
     cout<<afficheCase();
-    cout<<"Détendez-vous rien ne se passe";
+    cout<<"Detendez-vous rien ne se passe" << std::endl;
 }

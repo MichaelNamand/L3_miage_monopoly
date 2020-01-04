@@ -12,6 +12,7 @@
 #include "../joueur/joueur.h"
 #include "../case/propriete/propriete.h"
 
+#define DT_NB_CASES_PLATEAU 7;
 
 using std::queue;
 using std::vector;
@@ -23,13 +24,14 @@ public:
     vector<caseMonopoly> proprietesRestantes() const;
     const queue<carte*>& getPiocheChance() const;
     const queue<carte*>& getPiocheCaisseCommunaute() const;
-    void piocherCarteChance(joueur& j);
-    void piocherCarteCaisseCommunaute(joueur& j);
-    
+    void piocherCarte(joueur& j, int type);
+    caseMonopoly &getCase(int index) const;
+    vector<caseMonopoly*> getCases() const;
+
 private:
     queue<carte*> d_piocheCaisseCommunaute;
     queue<carte*> d_piocheChance;
-    vector<caseMonopoly> d_cases;
+    vector<caseMonopoly*> d_cases;
 };
 
 

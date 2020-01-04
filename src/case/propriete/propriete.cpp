@@ -3,12 +3,14 @@
 //
 
 #include "propriete.h"
+#include "../../jeu.h"
+#include "rue.h"
 #include <iostream>
-#include <limits>
 
-propriete::propriete(std::string &nom, int valeurHypotheque, int prix, std::vector<int> &loyers, int type) :
+propriete::propriete(const string &nom, int valeurHypotheque, int prix, const std::vector<int> &loyers, int type) :
         caseMonopoly{nom, type},
         d_prix{prix},
+        d_type{type},
         d_valeurHypotheque{valeurHypotheque},
         d_loyers{loyers} {}
 
@@ -25,80 +27,116 @@ propriete::~propriete() {
 }
 
 void propriete::action(joueur &j) {
-    std::cout << "Vous tombez sur " << afficheCase();
+    std::cout << "Vous tombez sur " << afficheCase() << " !" << std::endl;
 }
 
-void propriete::choixActions(int montantPaiement) {
-    int choix = 0;
-    if (!d_proprietaire) {
-        std::cout << "Cette case n'apartient a personne. Celle-ci coute " <<
-            d_prix << ". Que voulez-vous faire ?" << std::endl << "1. Acheter"
-                  << std::endl <<"2. Ne rien faire" << std::endl;
-        while (choix <= 0  || choix > 2) {
-            std::cin >> choix;
-            switch (choix) {
-                case 1:
-                    std::cout << "Confirmez l'achat ? Appuyez sur Entree  pour continuer ou Echap pour annuler...";
-                    if(getConfirmationJoueur()) {
-                        // TODO opération achat joueur + push propriété.
-                    } else choix = 100;
-                    break;
-                case 2:
-                    std::cout << "Voulez-vous vraiment ne rien faire ? La propriete sera mise aux encheres... " <<std::endl <<
-                              "Appuyez sur Entree pour continuer ou Echap pour annuler...";
-                    break;
-                default:
-                    std::cout << "Votre choix n'est pas valide." << std::endl;
-            }
-        }
+void propriete::afficherResultatPaiement(bool succes, joueur &j) {
+    if (succes) {
+        std::cout << std::endl << "Le paiement s'est bien deroule. Il vous reste " << j.getArgent() << " euros." << std::endl;
     } else {
-        std::cout << "Cette case appartient a " << d_proprietaire->getNom() << ". Vous lui devez : " << montantPaiement << "€." <<
-        std::endl << "Comment souhaitez-vous regler ?" << std::endl <<
+        std::cout << "Oups, il semblerait qu'il vous manque " << getPrix() - j.getArgent() <<
+                  " euros pour effectuer le paiement. L'operation a ete annulee." << std::endl;
+    }
+}
 
-        "1. Avec mon solde" << std::endl <<
-        "2. En hypothequant";
-        choix = 0;
-        while (choix <= 0  || choix > 2) {
-            std::cin >> choix;
-            switch (choix) {
+void propriete::choixActions(int montantPaiement, joueur &j) {
+    int selection = 0;
+    if (!d_proprietaire) {
+        string question = "Cette case n'apartient a personne. Celle-ci coute " +
+                          std::to_string(d_prix) + " euros. Votre solde est de " + std::to_string(j.getArgent()) +
+                          " euros. Que voulez-vous faire ?";
+        vector<string> choix = {"Acheter", "Ne rien faire"};
+        selection = jeu::afficherEtRecupererChoix(question, choix);
+        switch (selection) {
+            case 1:
+                std::cout << "Confirmez l'achat ? Appuyez sur -o  pour continuer ou -a pour annuler...";
+                if (jeu::getConfirmationJoueur()) {
+                    afficherResultatPaiement(j.acheterPropriete(this), j);
+                } else choixActions(montantPaiement, j);
+                break;
+            case 2:
+                std::cout << "Voulez-vous vraiment ne rien faire ? La propriete sera mise aux encheres... " << std::endl
+                          << "Appuyez sur -o pour continuer ou -a pour annuler..." << std::endl;
+                if (jeu::getConfirmationJoueur()) {
+
+                }
+                break;
+            default:
+                std::cout << "Votre choix n'est pas valide." << std::endl;
+        }
+    } else if (d_proprietaire != &j){
+        string question = "Cette case appartient a " + d_proprietaire->getNom() + ". Vous lui devez : " + std::to_string(montantPaiement)
+                          + " euros. Comment souhaitez-vous regler ? Votre solde est de " + std::to_string(j.getArgent()) + " euros.";
+        vector<string> choix = {"Avec mon solde" ,"En hypothequant", "En vendant mes maisons/hotels" };
+        int selection = jeu::afficherEtRecupererChoix(question, choix);
+            switch (selection) {
                 case 1:
-                    std::cout << "Confirmez le paiement ? Appuyez sur Entree  pour continuer ou Echap pour annuler...";
-                    if(getConfirmationJoueur()) {
-                        // TODO opération achat joueur + push propriété.
-                    } else choix = 100;
-
+                    std::cout << "Confirmez le paiement ? Appuyez sur -o  pour continuer ou -a pour annuler...";
+                    if (jeu::getConfirmationJoueur()) {
+                        afficherResultatPaiement(j.payerRedevanceJoueur(getProprietaire(), montantPaiement), j);
+                    } else choixActions(montantPaiement, j);
                     break;
-                case 2:
-                    std::cout << "Voulez-vous vraiment ne rien faire ? La propriete sera mise aux encheres... " <<std::endl <<
-                              "Appuyez sur Entree pour continuer ou Echap pour annuler...";
-                    if(getConfirmationJoueur()) {
-                        
-                    } else choix = 100;
+                case 2:{
+                    string message = "Voici la liste de vos proprietes avec leurs valeurs hypothequaires. Selectionnez-en jusqu'a obtenir"
+                                 " un solde suffisant pour payer vos dettes :";
+                     vector<string> choixProprietes;
+                     for (auto &prop : j.getProprietes(DT_ALL)) {
+                         choixProprietes.push_back("Nom : " + prop->afficheCase() + " Valeur hypothequaire : " +
+                         to_string(prop->getValeurHypotheque()) + " euros");
+                     }
+                     int index = jeu::afficherEtRecupererChoix(message, choixProprietes) - 1;
+                     propriete *selectionProp = j.getProprietes(DT_ALL)[index];
+                     cout << "Confirmer ? Vous recevrez " << selectionProp->getValeurHypotheque() << " euros pour "
+                     << selectionProp->afficheCase() << "." << endl;
+                     if (jeu::getConfirmationJoueur()) {
+                         j.hypothequerPropriete(selectionProp, index);
+                         cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
+                     } else choixActions(montantPaiement, j);
+                }
+                    break;
+                case 3: {
+                    string message = "Voici la liste de vos proprietes avec leurs nombres de maisons/hotels. Selectionnez-en jusqu'a obtenir"
+                                     " un solde suffisant pour payer vos dettes :";
+                    vector<string> choixProprietes;
+                    for (auto &prop : j.getProprietes(DT_RUE)) {
+                        choixProprietes.push_back(prop->affichePropriete());
+                    }
+                    int index = jeu::afficherEtRecupererChoix(message, choixProprietes) - 1;
+                    propriete *selectionProp = j.getProprietes(DT_ALL)[index];
+                    cout << "Selectionnez maintenant le nombre de maisons puis d'hotels que vous souhaitez vendre :";
+                    int nbMaisons, nbHotels;
+                    cin >> nbMaisons >> nbHotels;
+                    if (rue* r = dynamic_cast<rue*>(selectionProp)) {
+                        if (nbHotels > r->getNbHotels()) nbHotels = r->getNbHotels();
+                        if (nbMaisons > r->getNbMaisons()) nbMaisons = r->getNbMaisons();
+                        cout << "Confirmer ? Vous recevrez (" << nbMaisons << " * " << r->getPrixMaison() << ") + (" <<
+                            nbHotels * r->getPrixHotel() << ") = " << r->getPrixVenteHotelsMaisons(nbMaisons, nbHotels) << " euros pour "
+                             << selectionProp->afficheCase() << "." << endl;
+                        if (jeu::getConfirmationJoueur() && j.vendreMaisonsHotels(nbMaisons, nbHotels, r))
+                            cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
+                        } else choixActions(montantPaiement, j);
+                    }
                     break;
                 default:
                     std::cout << "Votre choix n'est pas valide." << std::endl;
             }
-        }
+    } else {
+        std::cout << "Vous etes chez vous ! Detendez-vous, rien ne se passe." << std::endl;
     }
 }
 
-bool propriete::getConfirmationJoueur() {
-    while (true) {
-        std::cout << std::cin.get();
-        if(std::cin.get() == 27) {
-            std::cout << "Operation annulee !" << std::endl;
-            return false;
-        }
-        if(std::cin.get() == 27) {
-            return true;
-        }
-    }
-}
-
-string propriete::getType() const {
+int propriete::getType() const {
     return d_type;
 }
 
-void propriete::setProprietaire(joueur &j) {
-    d_proprietaire = &j;
+void propriete::setProprietaire(joueur *j) {
+    d_proprietaire = j;
+}
+
+joueur *propriete::getProprietaire() {
+    return d_proprietaire;
+}
+
+string propriete::affichePropriete() const {
+    return "Nom : " + afficheCase() + "\nValeur hypotheque : " + to_string(getValeurHypotheque()) + '\n';
 }

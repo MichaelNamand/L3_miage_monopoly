@@ -9,6 +9,7 @@
 #include "../caseMonopoly.h"
 #include "groupeCouleur.h"
 #include "../../joueur/joueur.h"
+using namespace std;
 
 class propriete : public caseMonopoly {
 private:
@@ -16,23 +17,25 @@ private:
     int d_prix;
 
 protected:
-    std::vector<int> d_loyers;
+    vector<int> d_loyers;
     joueur *d_proprietaire;
 public:
-    propriete(std::string &nom, int valeurHypotheque, int prix, std::vector<int> &loyers, int type);
+    propriete(const string &nom, int valeurHypotheque, int prix, const vector<int> &loyers, int type);
     ~propriete();
     virtual int getLoyer(joueur &j) const = 0;
 
     void action(joueur &j) override;
-    void setProprietaire(joueur &j);
-    void choixActions(int montantPaiement);
-    bool getConfirmationJoueur();
+    void setProprietaire(joueur *j);
+    joueur *getProprietaire();
+    void afficherResultatPaiement(bool succes, joueur &j);
+    void choixActions(int montantPaiement, joueur &j);
     int getValeurHypotheque() const;
     int getPrix() const;
-    string getType() const;
+    int getType() const;
+    virtual string affichePropriete() const;
 
 private:
-    string d_type;
+    int d_type;
 };
 
 

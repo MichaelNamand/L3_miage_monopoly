@@ -14,14 +14,20 @@ private:
     int d_nbHotels = 0;
 
 public:
-    rue(std::string &nom, std::string &couleur, int valeurHypotheque, int prix, std::vector<int> loyers, int nbMaxCouleur);
+    rue(const string &nom, const string &couleur, int valeurHypotheque, int prix, const std::vector<int> &loyers, int nbMaxCouleur,
+            int prixMaison, int prixHotel);
     int getNbMaisons() const;
     int getNbHotels() const;
+    int getPrixMaison() const;
+    int getPrixHotel() const;
+    int getPrixVenteHotelsMaisons(int nbMaison, int nbHotels);
     int getLoyer(joueur &j) const override;
     void action(joueur &j) override;
-
+    string affichePropriete() const override;
 private:
     groupeCouleur d_groupeCouleur;
+    int d_prixMaison;
+    int d_prixHotel;
 
 };
 

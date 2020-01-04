@@ -4,7 +4,19 @@
 
 #include <time.h>
 #include "joueur.h"
+#include <iostream>
 #include "../case/propriete/propriete.h"
+#include "../case/propriete/rue.h"
+#include "../plateau/plateau.h"
+#include "../jeu.h"
+
+using namespace std;
+
+joueur::joueur(const string &nom): d_nom{nom} {
+    d_argent = 1500;
+    d_indexCase = 0;
+    d_nbTourPrison = 0;
+}
 
 int joueur::getArgent() const {
     return d_argent;
@@ -23,26 +35,41 @@ int joueur::getTourEnPrison() const {
     return d_nbTourPrison;
 }
 
-void joueur::setEnPrison(int tour) {
-    int d_nbTourPrison = tour;
+void joueur::setEnPrison(bool estEnPrison) {
+    d_estEnPrison = estEnPrison;
+    if (estEnPrison) {
+        int tmp = getIndexCase();
+        int casePrison = 10;
+        deplacerA(casePrison - tmp, false);
+    }
 }
 
-vector<int> joueur::lancerDes() const {
+vector<int> joueur::lancerDes() {
     srand (time(NULL));
     vector<int> des;
     des.push_back(rand() % 6 + 1);
     des.push_back(rand() % 6 + 1);
+    setDernierLanceDes(des[0] + des[1]);
     return des;
 }
 
 void joueur::gagnerSalaire() {
     d_argent += 200;
+    cout << "Vous venez de passer par la case Depart ! Recevez 200 euros. Votre nouveau solde est de " << getArgent() << "euros" << endl;
+    jeu::continuerJoueur();
 }
 
 void joueur::deplacerA(int indexCase, bool enAvancant) {
-    if(enAvancant && indexCase < d_indexCase)
+    cout << "Nouvel index : " << indexCase;
+    int max = DT_NB_CASES_PLATEAU;
+    if(enAvancant && indexCase >= max){
+        cout << " > max => ";
         gagnerSalaire();
-    d_indexCase = indexCase;
+        d_indexCase = indexCase - max;
+        cout << "indexReel = " << d_indexCase;
+    } else {
+        d_indexCase = indexCase;
+    }
 }
 
 void joueur::operation(int argent) {
@@ -69,20 +96,20 @@ void joueur::vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente) {
 
 }
 
-void joueur::hypothequerProptieter(int numeroPropirete) {
-    operation(d_proprietes[numeroPropirete]->getValeurHypotheque());
-    d_proprietesHypothequees.push_back(d_proprietes[numeroPropirete]);
-    d_proprietes.erase(d_proprietes.begin() + numeroPropirete);
+void joueur::hypothequerPropriete(propriete *propriete, int index) {
+    operation(propriete->getValeurHypotheque());
+    d_proprietesHypothequees.push_back(propriete);
+    d_proprietes.erase(d_proprietes.begin() + index);
 }
 
 string joueur::getNom() const {
     return d_nom;
 }
 
-vector<propriete*> joueur::getProprietes(string &typeNom) const {
+vector<propriete*> joueur::getProprietes(int type) const {
     vector<propriete*> tableauTemporaire;
     for (int i = 0; i < d_proprietes.size(); ++i) {
-        if (typeNom == d_proprietes[i]->getType()) {
+        if (type == d_proprietes[i]->getType() || type == DT_ALL) {
             tableauTemporaire.push_back(d_proprietes[i]);
         }
     }
@@ -91,4 +118,74 @@ vector<propriete*> joueur::getProprietes(string &typeNom) const {
 
 bool joueur::estEnPrison() const {
     return d_estEnPrison;
+}
+
+bool joueur::acheterPropriete(propriete *p) {
+    if (d_argent >= p->getPrix()) {
+        operation(-p->getPrix());
+        d_proprietes.push_back(p);
+        p->setProprietaire(this);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool joueur::payerRedevanceJoueur(joueur *j, int montantRedevance) {
+    if (getArgent() < montantRedevance) {
+        return false;
+    } else {
+        j->operation(montantRedevance);
+        operation(-montantRedevance);
+        return true;
+    }
+}
+
+int joueur::getNbDoubles() const {
+    return d_nbDoubles;
+}
+
+bool joueur::faitUnDoubleEtVaEnPrison() {
+    d_nbDoubles++;
+    if (d_nbDoubles == 3) {
+        d_nbDoubles = 0;
+        d_estEnPrison = true;
+        return true;
+    }
+    return false;
+}
+
+void joueur::reinitDoubles() {
+    d_nbDoubles = 0;
+}
+
+bool joueur::ajouterEtVerifierTourEnPrison() {
+    d_nbTourPrison++;
+    if (d_nbTourPrison == 3) {
+        d_nbTourPrison = 0;
+        return true;
+    }
+    return false;
+}
+
+int joueur::getDernierLanceDes() const {
+    return d_dernier_lance_des;
+}
+
+void joueur::setDernierLanceDes(int valeur) {
+    d_dernier_lance_des = valeur;
+}
+
+joueur::~joueur() {
+
+}
+
+bool joueur::vendreMaisonsHotels(int nbMaison, int nbHotels, rue *r) {
+    if (nbMaison > 0 && nbHotels > 0 && nbHotels <= r->getNbHotels() && nbMaison <= r->getNbMaisons()) {
+        operation(r->getPrixVenteHotelsMaisons(nbMaison, nbHotels));
+        return true;
+    } else {
+        cout << "Les valeurs saisies n'ont pas permis d'effectuer la vente..." << endl;
+        return false;
+    }
 }
