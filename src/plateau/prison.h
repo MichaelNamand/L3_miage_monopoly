@@ -6,8 +6,20 @@
 #define L3_MIAGE_MONOPOLY_PRISON_H
 
 
-class prison {
+#include "../joueur/joueur.h"
 
+class prison {
+public:
+    prison();
+
+    void sortirDePrison(joueur& j);
+    void allerEnPrison(joueur& j);
+    void essayerDeSortir(joueur& j);
+    void payerEnSortant(joueur& j);
+
+
+private:
+    void unJourDePlus(joueur& j);
 };
 
 
