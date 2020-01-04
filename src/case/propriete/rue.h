@@ -14,9 +14,15 @@ private:
     int d_nbHotels = 0;
 
 public:
+    rue(std::string &nom, std::string &couleur, int valeurHypotheque, int prix, std::vector<int> loyers, int nbMaxCouleur);
     int getNbMaisons() const;
     int getNbHotels() const;
-    int getLoyer(int index) override;
+    int getLoyer() const override;
+    void action(joueur *j) override;
+
+private:
+    groupeCouleur d_groupeCouleur;
+
 };
 
 

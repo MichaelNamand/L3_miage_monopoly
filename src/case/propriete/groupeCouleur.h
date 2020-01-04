@@ -13,8 +13,8 @@ private:
     int d_nbMaxCouleurs;
 
 public:
-    groupeCouleur(std::string couleur, int nbMaxCouleurs);
-    bool sontToutesPossedeesParJoueur();
+    groupeCouleur(std::string &couleur, int nbMaxCouleurs);
+    bool sontToutesPossedeesParJoueur() const;
 };
 
 
