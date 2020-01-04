@@ -6,7 +6,18 @@
 #define L3_MIAGE_MONOPOLY_ALLERENPRISON_H
 
 
-class allerEnPrison {
+#include "caseMonopoly.h"
+#include "../joueur/joueur.h"
+
+class allerEnPrison : public caseMonopoly {
+
+public :
+    allerEnPrison(const string& nom, int type);
+
+    virtual ~allerEnPrison();
+
+    virtual void action(joueur& j) override; //emmenerEnPrison
+
 
 };
 
