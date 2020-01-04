@@ -3,29 +3,15 @@
 //
 
 #include "plateau.h"
+#include <cstdlib>
 
 plateau::plateau() {
 
 }
 
-void plateau::carteChance(joueur j) {
-
-}
-
-void plateau::carteCommunaute(joueur j) {
-
-}
-
 void plateau::sortirDePrison(joueur j) {
-
-}
-
-int *plateau::lancerDes(joueur j) const {
-    return nullptr;
-}
-
-void plateau::mettreAuxEncheres() {
-
+    j.mettreEnPrison(false);
+    j.deplacerA(10, false); //se déplace sur la case visite de prison
 }
 
 vector<caseMonopoly> plateau::proprietesRestantes() const {
@@ -40,7 +26,25 @@ vector<caseMonopoly> plateau::proprietesRestantes() const {
     return p;
 }
 
-void plateau::lancerEchange() {
+const queue<carte> &plateau::getPiocheChance() const {
+    return d_piocheChance;
+}
 
+const queue<carte> &plateau::getPiocheCaisseCommunaute() const {
+    return d_piocheCaisseCommunaute;
+}
+
+void plateau::piocherCarteChance(joueur &j) {
+    carte cartePiochee = d_piocheChance.front();
+    d_piocheChance.pop();
+    cartePiochee.action(j);
+    d_piocheChance.push(cartePiochee);
+}
+
+void plateau::piocherCarteCaisseCommunaute(joueur &j) {
+    carte cartePiochee = d_piocheCaisseCommunaute.front();
+    d_piocheCaisseCommunaute.pop();
+    cartePiochee.action(j);
+    d_piocheCaisseCommunaute.push(cartePiochee);
 }
 
