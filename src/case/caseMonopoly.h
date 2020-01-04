@@ -8,11 +8,11 @@
 #include <string>
 #include "../joueur/joueur.h"
 
-const int DT_PIOCHE = 1;
-const int DT_PROPRIETE = 2;
-const int DT_FLUX = 3;
-const int DT_ALLERPRISON = 4;
-const int DT_ATTENTE = 5;
+#define DT_PIOCHE 1
+#define DT_PROPRIETE 2
+#define DT_FLUX 3
+#define DT_ALLERPRISON 4
+#define DT_ATTENTE 5
 
 using std::string;
 
