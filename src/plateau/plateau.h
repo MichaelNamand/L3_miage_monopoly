@@ -19,16 +19,16 @@ using std::vector;
 class plateau {
 public:
     plateau();
-    void sortirDePrison(joueur j);
+    void sortirDePrison(joueur &j);
     vector<caseMonopoly> proprietesRestantes() const;
-    const queue<carte>& getPiocheChance() const;
-    const queue<carte>& getPiocheCaisseCommunaute() const;
+    const queue<carte*>& getPiocheChance() const;
+    const queue<carte*>& getPiocheCaisseCommunaute() const;
     void piocherCarteChance(joueur& j);
     void piocherCarteCaisseCommunaute(joueur& j);
     
 private:
-    queue<carte> d_piocheCaisseCommunaute;
-    queue<carte> d_piocheChance;
+    queue<carte*> d_piocheCaisseCommunaute;
+    queue<carte*> d_piocheChance;
     vector<caseMonopoly> d_cases;
 };
 

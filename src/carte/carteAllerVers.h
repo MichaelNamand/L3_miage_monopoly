@@ -7,12 +7,13 @@
 
 
 #include "carte.h"
+#include "../joueur/joueur.h"
 
 class carteAllerVers : public carte {
 public:
     carteAllerVers(const string &texte, int cases);
 
-    void action(joueur j) override;
+    void action(joueur &j) override;
 
 private:
     int d_cases;

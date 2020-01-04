@@ -16,3 +16,7 @@ caseMonopoly::~caseMonopoly() {}
 string caseMonopoly::afficheCase() const {
     return d_nom;
 }
+
+int caseMonopoly::getType() const {
+    return d_type;
+}

@@ -4,11 +4,7 @@
 
 #include <time.h>
 #include "joueur.h"
-
-
-const string &joueur::getNom() const {
-    return d_nom;
-}
+#include "../case/propriete/propriete.h"
 
 int joueur::getArgent() const {
     return d_argent;
@@ -29,32 +25,6 @@ int joueur::getTourEnPrison() const {
 
 void joueur::setEnPrison(int tour) {
     int d_nbTourPrison = tour;
-}
-
-const vector<propriete> &joueur::getProprietes() const {
-    return d_proprietes;
-}
-
-const vector<propriete> &joueur::getRues() const {
-    vector<propriete()> p;
-    for (int i = 0; i < d_proprietes.size(); i++) {
-        if (d_proprietes[i].getType() == DT_RUES) {
-            if (d_proprietes[i].getJoueur() != nullptr) {
-                p.push_back(d_proprietes[i]);
-            }
-        }
-    }
-    return p;
-}
-
-vector<propriete> joueur::getPropriete(string typeNom) const {
-    vector<propriete> tableauTemporaire;
-    for (int i = 0; i < d_proprietes.size(); ++i) {
-        if (typeNom == d_proprietes.getType()) {
-            tableauTemporaire.push_back(d_proprietes[i]);
-        }
-    }
-    return tableauTemporaire;
 }
 
 vector<int> joueur::lancerDes() const {
@@ -92,18 +62,33 @@ void joueur::utiliserCartePrison() {
 
 }
 
-void joueur::vendrePropriete(joueur j, int numeroPropriete, int prixDeVente) {
-    propriete proprieteAcheter = d_proprietes[numeroPropriete];
+void joueur::vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente) {
     d_proprietes.erase(d_proprietes.begin() + numeroPropriete);
-    j.ajouterPropriete(proprieteAcheter);
     j.operation(-prixDeVente);
     operation(prixDeVente);
 
 }
 
 void joueur::hypothequerProptieter(int numeroPropirete) {
-     propriete proprieteHypothequer = d_proprietes[numeroPropirete];
-    operation(proprieteHypothequer.getValeurHypotheque());
-    d_proprietesHypothequer.push_back(proprieteHypothequer);
+    operation(d_proprietes[numeroPropirete]->getValeurHypotheque());
+    d_proprietesHypothequees.push_back(d_proprietes[numeroPropirete]);
     d_proprietes.erase(d_proprietes.begin() + numeroPropirete);
+}
+
+string joueur::getNom() const {
+    return d_nom;
+}
+
+vector<propriete*> joueur::getProprietes(string &typeNom) const {
+    vector<propriete*> tableauTemporaire;
+    for (int i = 0; i < d_proprietes.size(); ++i) {
+        if (typeNom == d_proprietes[i]->getType()) {
+            tableauTemporaire.push_back(d_proprietes[i]);
+        }
+    }
+    return tableauTemporaire;
+}
+
+bool joueur::estEnPrison() const {
+    return d_estEnPrison;
 }

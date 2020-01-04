@@ -12,7 +12,7 @@ using std::string;
 class carte {
 public:
  carte( const string& texte);
- virtual void action(joueur joueur) = 0;
+ virtual void action(joueur &j) = 0;
 
 private:
     string d_texte;

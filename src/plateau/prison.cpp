@@ -11,12 +11,12 @@ prison::prison() {
 
 
 void prison::sortirDePrison(joueur& j) {
-    j.mettreEnPrison(false);
+    // j.mettreEnPrison(false);
     j.deplacerA(10, false); //se déplace sur la case visite de prison
 }
 
 void prison::allerEnPrison(joueur& j) {
-    j.mettreEnPrison(true);
+    // j.mettreEnPrison(true);
 }
 
 void prison::essayerDeSortir(joueur& j) {
@@ -25,14 +25,14 @@ void prison::essayerDeSortir(joueur& j) {
         sortirDePrison(j);
     } else {
         unJourDePlus(j);
-        if(j.getNbJoursPrison() == 3) {
+        if(j.getTourEnPrison() == 3) {
             payerEnSortant(j);
         }
     }
 }
 
 void prison::unJourDePlus(joueur &j) {
-    j.setNbJoursPrison(j.getNbJoursPrison()+1);
+    j.setEnPrison(j.getTourEnPrison()+1);
 }
 
 void prison::payerEnSortant(joueur &j) {

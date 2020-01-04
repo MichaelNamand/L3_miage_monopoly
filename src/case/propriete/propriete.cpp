@@ -5,14 +5,12 @@
 #include "propriete.h"
 #include <iostream>
 #include <limits>
-#include <winuser.h>
 
-propriete::propriete(std::string &nom, int valeurHypotheque, int prix, std::vector<int> &loyers):
-        caseMonopoly{nom},
+propriete::propriete(std::string &nom, int valeurHypotheque, int prix, std::vector<int> &loyers, int type) :
+        caseMonopoly{nom, type},
         d_prix{prix},
         d_valeurHypotheque{valeurHypotheque},
-        d_loyers{loyers}
-{}
+        d_loyers{loyers} {}
 
 int propriete::getValeurHypotheque() const {
     return d_valeurHypotheque;
@@ -22,21 +20,17 @@ int propriete::getPrix() const {
     return d_prix;
 }
 
-joueur *propriete::getJoueur() const {
-    return d_joueur;
-}
-
 propriete::~propriete() {
 
 }
 
-void propriete::action(joueur *j) {
-    std::cout << "Vous tombez sur " << affiche();
+void propriete::action(joueur &j) {
+    std::cout << "Vous tombez sur " << afficheCase();
 }
 
 void propriete::choixActions(int montantPaiement) {
     int choix = 0;
-    if (!d_joueur) {
+    if (!d_proprietaire) {
         std::cout << "Cette case n'apartient a personne. Celle-ci coute " <<
             d_prix << ". Que voulez-vous faire ?" << std::endl << "1. Acheter"
                   << std::endl <<"2. Ne rien faire" << std::endl;
@@ -58,7 +52,7 @@ void propriete::choixActions(int montantPaiement) {
             }
         }
     } else {
-        std::cout << "Cette case appartient a " << d_joueur->getNom() << ". Vous lui devez : " << montantPaiement << "€." <<
+        std::cout << "Cette case appartient a " << d_proprietaire->getNom() << ". Vous lui devez : " << montantPaiement << "€." <<
         std::endl << "Comment souhaitez-vous regler ?" << std::endl <<
 
         "1. Avec mon solde" << std::endl <<
@@ -90,12 +84,21 @@ void propriete::choixActions(int montantPaiement) {
 
 bool propriete::getConfirmationJoueur() {
     while (true) {
-        if(GetAsyncKeyState(VK_ESCAPE) {
-            std::cout << "Operation annulee !" <<endl;
+        std::cout << std::cin.get();
+        if(std::cin.get() == 27) {
+            std::cout << "Operation annulee !" << std::endl;
             return false;
         }
-        if(GetAsyncKeyState(VK_ENTER) {
+        if(std::cin.get() == 27) {
             return true;
         }
     }
+}
+
+string propriete::getType() const {
+    return d_type;
+}
+
+void propriete::setProprietaire(joueur &j) {
+    d_proprietaire = &j;
 }

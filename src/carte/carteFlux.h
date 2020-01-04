@@ -11,7 +11,7 @@ class carteFlux : public carte {
 public:
     carteFlux(const string &texte, int flux);
 
-    void action(joueur joueur) override;
+    void action(joueur &j) override;
 
 private:
     int d_flux;

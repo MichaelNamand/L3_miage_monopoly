@@ -10,15 +10,13 @@
 
 class carteDeplacement : public carte {
 public:
-    carteDeplacement(const string &texte, int cases);
+    carteDeplacement(const string &texte, int cases, bool d_sensNormal);
 
-    void action(joueur j) override;
-
+    void action(joueur &j) override;
 
 private:
     int d_cases;
-
-
+    bool d_sensNormal;
 };
 
 

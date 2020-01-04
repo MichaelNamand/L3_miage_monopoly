@@ -13,9 +13,9 @@ int rue::getNbHotels() const {
 }
 
 rue::rue(std::string &nom, std::string &couleur, int valeurHypotheque, int prix, std::vector<int> loyers, int nbMaxCouleur):
-    propriete{nom, valeurHypotheque, prix, loyers}, d_groupeCouleur{couleur, nbMaxCouleur} {}
+    propriete{nom, valeurHypotheque, prix, loyers, DT_RUE}, d_groupeCouleur{couleur, nbMaxCouleur} {}
 
-int rue::getLoyer() const {
+int rue::getLoyer(joueur &j) const {
     int multiplicateur = 1;
     if (d_groupeCouleur.sontToutesPossedeesParJoueur() && getNbHotels() == 0 && getNbMaisons() == 0) {
         multiplicateur = 2;
@@ -23,7 +23,7 @@ int rue::getLoyer() const {
     return d_loyers[d_nbMaisons + d_nbHotels] * multiplicateur;
 }
 
-void rue::action(joueur *j) {
+void rue::action(joueur &j) {
     propriete::action(j);
-    propriete::choixActions(getLoyer());
+    propriete::choixActions(getLoyer(j));
 }

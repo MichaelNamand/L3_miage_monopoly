@@ -7,8 +7,9 @@
 
 #include <string>
 #include <vector>
+#include <bits/unique_ptr.h>
 #include "../carte/carteSortiePrison.h"
-#include "../case/propriete/propriete.h"
+class propriete;
 
 using std::string;
 using std::vector;
@@ -25,11 +26,11 @@ public:
 
     vector<carteSortiePrison> getCartesSortiePrison() const;
 
-    vector<propriete> getPropriete(string typeNom) const;
+    vector<propriete*> getProprietes(string &typeNom) const;
 
-    void ajouterPropriete(propriete &propriete);
+    // void ajouterPropriete(propriete propriete);
 
-    void vendrePropriete(joueur j, int numeroPropriete, int prixDeVente);
+    void vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente);
 
     void hypothequerProptieter(int numeroPropriete);
 
@@ -56,9 +57,10 @@ private:
     int d_argent;
     int d_indexCase;
     int d_nbTourPrison;
+    bool d_estEnPrison = false;
     vector<carteSortiePrison> d_cartesSortiePrison;
-    vector<propriete> d_proprietes;
-    vector<propriete> d_proprietesHypothequer
+    vector<propriete*> d_proprietes;
+    vector<propriete*> d_proprietesHypothequees;
 
 };
 

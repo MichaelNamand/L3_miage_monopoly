@@ -5,14 +5,14 @@
 #include "servicePublic.h"
 
 servicePublic::servicePublic(std::string nom, int valeurHypotheque, int prix, std::vector<int> loyers):
-    propriete{nom, valeurHypotheque, prix, loyers}{
+    propriete{nom, valeurHypotheque, prix, loyers, DT_SERVICE_PUBLIC}{
 
 }
 
-int servicePublic::getLoyer() const {
-    return 0; // TODO
+void servicePublic::action(joueur &j) {
+    propriete::action(j);
 }
 
-int servicePublic::getLoyer(int index) {
-    return d_loyers[index];
+int servicePublic::getLoyer(joueur &j) const {
+    return d_loyers[0];
 }

@@ -12,9 +12,7 @@ class carteAllerEnPrison : public carte {
 public:
     carteAllerEnPrison(const string &texte);
 
-    void action(joueur joueur) override;
-
-
+    void action(joueur &j) override;
 };
 
 
