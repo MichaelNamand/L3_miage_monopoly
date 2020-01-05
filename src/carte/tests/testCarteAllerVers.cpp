@@ -11,6 +11,6 @@ TEST_CASE ("tester methode lie a la classe CarteAllerVers") {
     joueur j{"Testeur"};
 
     carte.action(j);
-    REQUIRE_EQ(j.getIndexCase(), numeroCase-1);
+    REQUIRE_EQ(j.getIndexCase(), numeroCase);
 
 }
