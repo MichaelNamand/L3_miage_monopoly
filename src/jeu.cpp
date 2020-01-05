@@ -183,7 +183,7 @@ void jeu::lancerJeu() {
                                         int nbHotels, nbMaisons;
                                         cout << "Renseignez le nombre de maisons et d'hotels a constuire : " << endl;
                                         cin >> nbHotels >> nbMaisons;
-                                        int prixTotal = r->getPrixVenteHotelsMaisons(nbMaisons, nbHotels);
+                                        int prixTotal = r->getPrixAchatHotelsMaisons(nbMaisons, nbHotels);
                                         if (prixTotal <= j.getArgent()) {
                                             cout << "Confirmer ? Vous devrez payer au total " << prixTotal << " euros.";
                                             if (jeu::getConfirmationJoueur() && j.achatMaisonsHotels(nbMaisons, nbHotels, r)) {

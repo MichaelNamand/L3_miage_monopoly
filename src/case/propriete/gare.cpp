@@ -3,16 +3,18 @@
 //
 
 #include "gare.h"
+#include <iostream>
 
-gare::gare(const std::string &nom, int valeurHypotheque, int prix,const std::vector<int>&loyers):
-    propriete{nom, valeurHypotheque, prix, loyers, DT_GARE} {
+gare::gare(const std::string &nom, int prix,const std::vector<int>&loyers):
+    propriete{nom, prix, loyers, DT_GARE} {
 }
 
 void gare::action(joueur &j) {
+    propriete::action(j);
     propriete::choixActions(getLoyer(j), j);
 }
 
 int gare::getLoyer(joueur &j) const {
-    return d_loyers[j.getProprietes(DT_GARE).size() - 1];
+    return d_loyers[getProprietaire()->getProprietes(DT_GARE).size() - 1];
 }
 

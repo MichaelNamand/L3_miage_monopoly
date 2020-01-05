@@ -12,7 +12,7 @@
 #include "../joueur/joueur.h"
 #include "../case/propriete/propriete.h"
 
-#define DT_NB_CASES_PLATEAU 7;
+#define DT_NB_CASES_PLATEAU 40;
 
 using std::queue;
 using std::vector;

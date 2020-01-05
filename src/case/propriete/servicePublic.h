@@ -11,7 +11,7 @@
 
 class servicePublic: public propriete {
 public:
-    servicePublic(const std::string &nom, int valeurHypotheque, int prix);
+    servicePublic(const std::string &nom, int prix);
     int getLoyer(joueur &j) const override;
     void action(joueur &j) override;
 };

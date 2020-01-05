@@ -14,10 +14,10 @@ int rue::getNbHotels() const {
     return d_nbHotels;
 }
 
-rue::rue(const string &nom, const string &couleur, int valeurHypotheque, int prix,const std::vector<int> &loyers, int nbMaxCouleur,
-        int prixMaison, int prixHotel, int prixMaisonAchat, int prixHotelAchat):
-        propriete{nom, valeurHypotheque, prix, loyers, DT_RUE}, d_groupeCouleur{couleur, nbMaxCouleur}, d_prixMaisonVente{prixMaison},
-        d_prixHotelVente{prixHotel}, d_prixMaisonAchat{prixMaisonAchat}, d_prixHotelAchat{prixHotelAchat} {}
+rue::rue(const string &nom, const string &couleur, int prix,const std::vector<int> &loyers, int nbMaxCouleur,
+        int prixMaisonHotel):
+        propriete{nom, prix, loyers, DT_RUE}, d_groupeCouleur{couleur, nbMaxCouleur},
+        d_prixMaisonHotel{prixMaisonHotel} {}
 
 int rue::getLoyer(joueur &j) const {
     int multiplicateur = 1;
@@ -37,16 +37,16 @@ string rue::affichePropriete() const {
     + "\nCouleur : " + d_groupeCouleur.getCouleur() + "\n";
 }
 
-int rue::getPrixMaisonVente() const {
-    return d_prixMaisonVente;
+int rue::getPrixMaisonHotelVente() const {
+    return d_prixMaisonHotel / 2;
 }
 
-int rue::getPrixHotelVente() const {
-    return d_prixHotelVente;
+int rue::getPrixMaisonHotelAchat() const {
+    return d_prixMaisonHotel;
 }
 
 int rue::getPrixVenteHotelsMaisons(int nbMaison, int nbHotels) {
-    return nbMaison * getPrixMaisonVente() + nbHotels * getPrixHotelVente();
+    return nbMaison * getPrixMaisonHotelVente() * (nbMaison + nbHotels);
 }
 
 groupeCouleur &rue::getGroupeCouleur() {
@@ -54,13 +54,5 @@ groupeCouleur &rue::getGroupeCouleur() {
 }
 
 int rue::getPrixAchatHotelsMaisons(int nbMaison, int nbHotels) {
-    return nbMaison * getPrixMaisonVente() + nbHotels * getPrixHotelVente();
-}
-
-int rue::getPrixMaisonAchat() const {
-    return d_prixMaisonAchat;
-}
-
-int rue::getPrixHotelAchat() const {
-    return d_prixHotelAchat;
+    return getPrixMaisonHotelAchat() * (nbMaison + nbHotels);
 }
