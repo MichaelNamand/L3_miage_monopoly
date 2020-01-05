@@ -3,10 +3,14 @@
 //
 
 #include "carteAllerVers.h"
+#include <iostream>
+
 carteAllerVers::carteAllerVers(const string &texte, int cases) :
         carte{texte}, d_cases{cases} {}
 
 void carteAllerVers::action(joueur &j) {
+    std::cout << afficheCarte() << std::endl;
+
     int tmp = j.getIndexCase();
     if (tmp < d_cases) {
         j.deplacerA(d_cases - tmp, true);

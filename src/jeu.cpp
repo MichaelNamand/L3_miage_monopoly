@@ -6,7 +6,7 @@
 #include "case/propriete/rue.h"
 #include <iostream>
 #include <limits>
-#include <curses.h>
+#include <conio.h>
 
 using namespace std;
 
@@ -17,7 +17,7 @@ void jeu::lancerJeu() {
          << endl << endl << "Pour commencer, inscrivez au minimum 2 joueurs." << endl;
 
     int selection = 0;
-    vector<joueur> joueurs {joueur{"Michael"}, joueur{"Julien"}};
+    vector<joueur> joueurs{joueur{"Michael"}, joueur{"Julien"}};
     while (joueurs.size() < 2 || selection != 3) {
         string question = "Actuellement, il y a " + to_string(joueurs.size()) +
                           " joueur(s) enregistre(s). Que souhaitez-vous faire ?";
@@ -71,152 +71,21 @@ void jeu::lancerJeu() {
     // plateau d_plateau{};
     int tourJoueur = 0;
     d_joueurs = joueurs;
-    while (joueurs.size() != 1) {
-        joueur &joueurPrecedent = joueurs[tourJoueur];
+    while (d_joueurs.size() != 1) {
+        joueur &joueurPrecedent = d_joueurs[tourJoueur];
         if (joueurPrecedent.getNbDoubles() == 0) {
             tourJoueur++;
-            if (tourJoueur >= joueurs.size()) tourJoueur = 0;
-        } else if (!joueurPrecedent.estEnPrison()){
+            if (tourJoueur >= d_joueurs.size()) tourJoueur = 0;
+        } else if (!joueurPrecedent.estEnPrison()) {
             cout << "C'est au joueur precedent de rejouer : ";
         }
-        joueur &j = joueurs[tourJoueur];
+        joueur &j = d_joueurs[tourJoueur];
 
         cout << "C'est au tour de " << j.getNom() << "." << endl;
         if (j.estEnPrison()) {
             cout << "Vous etes actuellement en prison..." << endl;
         }
-        string question = "Choisir une des options suivantes : ";
-        vector<string> choix = {"Lancer les des", "Gerer ses proprietes"};
-        if (j.estEnPrison()) choix.emplace_back("Payer directement les frais de sortie 50 euros");
-        selection = afficherEtRecupererChoix(question, choix);
-        switch (selection) {
-            case 1: {
-                vector<int> valeurDes = j.lancerDes();
-                cout << j.getNom() << " joue (" << valeurDes[0] << " + " << valeurDes[1] << ") = "
-                     << valeurDes[0] + valeurDes[1] << endl;
-                if (valeurDes[0] == valeurDes[1]) {
-                    cout << "Vous venez de faire un double. " << endl;
-                    if (!j.estEnPrison() && j.faitUnDoubleEtVaEnPrison()) {
-                        cout << "Vous avez fait trois doubles... Direction la case prison !";
-                        j.setEnPrison(true);
-                        continuerJoueur();
-                    } else if (!j.estEnPrison()){
-                        cout <<  "Attention, encore " << 3 - j.getNbDoubles() << " et c'est la prison..." << endl;
-                        continuerJoueur();
-                    } else {
-                        cout << "Super ! Vous pouvez sortir de prison sans frais !" << endl;
-                        j.setEnPrison(false);
-                        continuerJoueur();
-                    }
-                } else {
-                    if (!j.estEnPrison()) {
-                        j.reinitDoubles();
-                    } else {
-                        if (j.ajouterEtVerifierTourEnPrison()) {
-                            cout << "Vous venez de tenter votre derniere chance pour sortir de prison en vain. 50 euros "
-                                    "ont ete preleves de votre solde pour sortir. Votre solde est maintenant de " <<
-                                    j.getArgent() << " euros";
-                            continuerJoueur();
-                        } else {
-                            cout << "Pas de chance pour cette fois. Vous restez en prison... Il vous reste encore " <<
-                            3 - j.getTourEnPrison() << " essai(s)." << endl;
-                            continuerJoueur();
-                        }
-                    }
-                }
-                if (!j.estEnPrison()) {
-                    j.deplacerA(j.getIndexCase() + valeurDes[0] + valeurDes[1], true);
-                    d_plateau.getCase(j.getIndexCase()).action(j);
-                }
-            }
-                break;
-            case 2: {
-                while (jeu::getConfirmationJoueur()) {
-                    if (!j.getProprietes(DT_ALL).empty())  {
-                        string message = "Voici la liste de vos biens. Selectionnez celle que vous voulez gerer :";
-                        vector<string> choixListe;
-                        for (auto &prop : j.getProprietes(DT_ALL)) {
-                            choixListe.push_back(prop->affichePropriete());
-                        }
-                        int selectionProp = jeu::afficherEtRecupererChoix(message, choixListe);
-                        propriete *propChoisi = j.getProprietes(DT_ALL)[selectionProp];
-                        message = "Que voulez-vous faire avec cette propriete ?";
-                        vector<string> choixPropriete;
-                        if (propChoisi->estHypothequee()) {
-                            choixPropriete.emplace_back("Retirer l'hypotheque");
-                        } else {
-                            choixPropriete.emplace_back("Hypothequer");
-                        }
-                        if (rue *r = dynamic_cast<rue *>(propChoisi)) {
-                            choixPropriete.emplace_back("Acheter des maisons");
-                            choixPropriete.emplace_back("Acheter des hotels");
-                        }
-                        int selectionAction = jeu::afficherEtRecupererChoix(message, choixPropriete);
-                        switch (selectionAction) {
-                            case 1: {
-                                if (propChoisi->estHypothequee()) {
-                                    cout << "Confirmer ? Vous recevrez " << propChoisi->getValeurHypotheque() << " euros pour" <<
-                                         " la mise en hypotheque de ce bien" << endl;
-                                    if (jeu::getConfirmationJoueur()) {
-                                        propChoisi->setHypotheque(true);
-                                        j.operation(propChoisi->getValeurHypotheque());
-                                        cout << "Votre bien a bien ete hypotheque. Votre nouveau solde est de " << j.getArgent() <<
-                                             " euros." << endl;
-                                        jeu::continuerJoueur();
-                                    }
-                                } else {
-                                    cout << "Confirmer ? Vous devrez payer " << propChoisi->getValeurHypotheque() << " euros pour" <<
-                                         " retirer l'hypotheque de ce bien" << endl;
-                                    if (jeu::getConfirmationJoueur()) {
-                                        propChoisi->setHypotheque(false);
-                                        j.operation(-propChoisi->getValeurHypotheque());
-                                        cout << "Votre bien est de nouveau disponible. Votre nouveau solde est de " << j.getArgent() <<
-                                             " euros." << endl;
-                                        jeu::continuerJoueur();
-                                    }
-                                }
-                            }
-                                break;
-                            case 2: {
-                                if (rue *r = dynamic_cast<rue *>(propChoisi)) {
-                                    if (r->getGroupeCouleur().sontToutesPossedeesParJoueur(j)) {
-                                        int nbHotels, nbMaisons;
-                                        cout << "Renseignez le nombre de maisons et d'hotels a constuire : " << endl;
-                                        cin >> nbHotels >> nbMaisons;
-                                        int prixTotal = r->getPrixAchatHotelsMaisons(nbMaisons, nbHotels);
-                                        if (prixTotal <= j.getArgent()) {
-                                            cout << "Confirmer ? Vous devrez payer au total " << prixTotal << " euros.";
-                                            if (jeu::getConfirmationJoueur() && j.achatMaisonsHotels(nbMaisons, nbHotels, r)) {
-                                                cout << "L'operation s'est bien passee. Votre nouveau solde est de " << j.getArgent()
-                                                << " euros. Votre rue possede maintenant " << r->getNbMaisons() << " maison(s) et " <<
-                                                r->getNbHotels() << " hotel(s)." << endl;
-                                            }
-                                        }
-                                    } else {
-                                        cout << "Vous ne pouvez rien construire tant que vous ne possedez pas toute les cartes d'une famille !" << endl;
-                                    }
-                                }
-
-                            }
-                        }
-                    } else {
-                        cout << "Vous ne possédez aucune propriete !";
-                    }
-                }
-            }
-            break;
-            case 3: {
-                cout << "Payer 50 euros pour sortir de prison. Appuyer sur -o pour confirmer, -a pour annuler";
-                if (getConfirmationJoueur()) {
-                    j.operation(-50);
-                    j.setEnPrison(false);
-                    cout << "Vous etes sorti de prison. Votre solde est maintenant de " << j.getArgent() << " euros. "
-                            "Pour pouvoir avancer, attendez jusqu'au prochain tour." << endl;
-                    jeu::continuerJoueur();
-                }
-            }
-
-        }
+        gererTourJoueur(j);
     }
 }
 
@@ -255,4 +124,158 @@ void jeu::continuerJoueur() {
     cout << "Appuyez sur Entree pour continuer...";
     getch();
 
+}
+
+void jeu::gererPropriete(joueur &j) {
+    if (!j.getProprietes(DT_ALL).empty()) {
+        string message = "Voici la liste de vos biens. Selectionnez celle que vous voulez gerer :";
+        vector<string> choixListe;
+        for (auto &prop : j.getProprietes(DT_ALL)) {
+            choixListe.push_back(prop->affichePropriete());
+        }
+        choixListe.emplace_back("Terminer");
+        int selectionProp = jeu::afficherEtRecupererChoix(message, choixListe) - 1;
+        if (selectionProp + 1 >= choixListe.size()) {
+            gererTourJoueur(j);
+        } else {
+            propriete *propChoisi = j.getProprietes(DT_ALL)[selectionProp];
+            message = "Que voulez-vous faire avec cette propriete ?";
+            vector<string> choixPropriete;
+            if (propChoisi->estHypothequee()) {
+                choixPropriete.emplace_back("Retirer l'hypotheque");
+            } else {
+                choixPropriete.emplace_back("Hypothequer");
+            }
+            if (rue *r = dynamic_cast<rue *>(propChoisi)) {
+                choixPropriete.emplace_back("Acheter des maisons/hotels");
+            }
+            choixPropriete.emplace_back("Terminer");
+
+            int selectionAction = jeu::afficherEtRecupererChoix(message, choixPropriete);
+            switch (selectionAction) {
+                case 1: {
+                    if (!propChoisi->estHypothequee()) {
+                        cout << "Confirmer ? Vous recevrez " << propChoisi->getValeurHypotheque() << " euros pour" <<
+                             " la mise en hypotheque de ce bien" << endl;
+                        if (jeu::getConfirmationJoueur()) {
+                            propChoisi->setHypotheque(true);
+                            j.operation(propChoisi->getValeurHypotheque());
+                            cout << "Votre bien a bien ete hypotheque. Votre nouveau solde est de " << j.getArgent() <<
+                                 " euros." << endl;
+                            jeu::continuerJoueur();
+                        }
+                    } else {
+                        cout << "Confirmer ? Vous devrez payer " << propChoisi->getValeurHypotheque() << " euros pour"
+                             <<
+                             " retirer l'hypotheque de ce bien" << endl;
+                        if (jeu::getConfirmationJoueur()) {
+                            propChoisi->setHypotheque(false);
+                            j.operation(-propChoisi->getValeurHypotheque());
+                            cout << "Votre bien est de nouveau disponible. Votre nouveau solde est de " << j.getArgent()
+                                 <<
+                                 " euros." << endl;
+                            jeu::continuerJoueur();
+                        }
+                    }
+                }
+                    break;
+                case 2: {
+                    if (rue *r = dynamic_cast<rue *>(propChoisi)) {
+                        if (r->getGroupeCouleur().sontToutesPossedeesParJoueur(j)) {
+                            int nbHotels, nbMaisons;
+                            cout << "Renseignez le nombre de maisons et d'hotels a constuire : " << endl;
+                            cin >> nbHotels >> nbMaisons;
+                            int prixTotal = r->getPrixAchatHotelsMaisons(nbMaisons, nbHotels);
+                            if (prixTotal <= j.getArgent()) {
+                                cout << "Confirmer ? Vous devrez payer au total " << prixTotal << " euros.";
+                                if (jeu::getConfirmationJoueur() && j.achatMaisonsHotels(nbMaisons, nbHotels, r)) {
+                                    cout << "L'operation s'est bien passee. Votre nouveau solde est de "
+                                         << j.getArgent()
+                                         << " euros. Votre rue possede maintenant " << r->getNbMaisons()
+                                         << " maison(s) et " <<
+                                         r->getNbHotels() << " hotel(s)." << endl;
+                                }
+                            }
+                        } else {
+                            cout << "Vous ne pouvez rien construire tant que vous ne possedez pas toute les cartes d'une famille !"<< endl;
+                        }
+                    } else {
+                        gererPropriete(j);
+                    }
+
+                }
+                break;
+                case 3:
+                    gererPropriete(j);
+            }
+        }
+
+    } else {
+        cout << "Vous ne possedez aucune propriete !" << endl;
+        gererTourJoueur(j);
+    }
+}
+
+void jeu::gererTourJoueur(joueur &j) {
+    string question = "Choisir une des options suivantes : ";
+    vector<string> choix = {"Lancer les des", "Gerer ses proprietes"};
+    if (j.estEnPrison()) choix.emplace_back("Payer directement les frais de sortie 50 euros");
+    int selection = afficherEtRecupererChoix(question, choix);
+
+    switch (selection) {
+        case 1: {
+            vector<int> valeurDes = j.lancerDes();
+            cout << j.getNom() << " joue (" << valeurDes[0] << " + " << valeurDes[1] << ") = "
+                 << valeurDes[0] + valeurDes[1] << endl;
+            if (valeurDes[0] == valeurDes[1]) {
+                cout << "Vous venez de faire un double. " << endl;
+                if (!j.estEnPrison() && j.faitUnDoubleEtVaEnPrison()) {
+                    cout << "Vous avez fait trois doubles... Direction la case prison !";
+                    j.setEnPrison(true);
+                    continuerJoueur();
+                } else if (!j.estEnPrison()) {
+                    cout << "Attention, encore " << 3 - j.getNbDoubles() << " et c'est la prison..." << endl;
+                    continuerJoueur();
+                } else {
+                    cout << "Super ! Vous pouvez sortir de prison sans frais !" << endl;
+                    j.setEnPrison(false);
+                    continuerJoueur();
+                }
+            } else {
+                if (!j.estEnPrison()) {
+                    j.reinitDoubles();
+                } else {
+                    if (j.ajouterEtVerifierTourEnPrison()) {
+                        cout << "Vous venez de tenter votre derniere chance pour sortir de prison en vain. 50 euros "
+                                "ont ete preleves de votre solde pour sortir. Votre solde est maintenant de " <<
+                             j.getArgent() << " euros";
+                        continuerJoueur();
+                    } else {
+                        cout << "Pas de chance pour cette fois. Vous restez en prison... Il vous reste encore " <<
+                             3 - j.getTourEnPrison() << " essai(s)." << endl;
+                        continuerJoueur();
+                    }
+                }
+            }
+            if (!j.estEnPrison()) {
+                j.deplacerA(j.getIndexCase() + valeurDes[0] + valeurDes[1], true);
+                d_plateau.getCase(j.getIndexCase()).action(j);
+            }
+        }
+            break;
+        case 2: {
+            gererPropriete(j);
+        }
+            break;
+        case 3: {
+            cout << "Payer 50 euros pour sortir de prison. Appuyer sur -o pour confirmer, -a pour annuler";
+            if (getConfirmationJoueur()) {
+                j.operation(-50);
+                j.setEnPrison(false);
+                cout << "Vous etes sorti de prison. Votre solde est maintenant de " << j.getArgent() << " euros. " <<
+                     "Pour pouvoir avancer, attendez jusqu'au prochain tour." << endl;
+                jeu::continuerJoueur();
+            }
+        }
+    }
 }

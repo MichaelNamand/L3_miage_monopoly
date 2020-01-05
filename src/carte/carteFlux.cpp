@@ -1,7 +1,7 @@
 //
 //
 //
-
+#include <iostream>
 #include "carteFlux.h"
 #include "../joueur/joueur.h"
 
@@ -10,5 +10,7 @@ carteFlux::carteFlux(const string &texte, int flux) :
         d_flux{flux} {}
 
 void carteFlux::action(joueur &j) {
-    j.operation(j.getArgent() + d_flux);
+    std::cout << afficheCarte();
+    j.operation(d_flux);
+    std::cout << " Votre nouveau solde est de " << j.getArgent() << " euros." << std::endl;
 }

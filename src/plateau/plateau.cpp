@@ -128,7 +128,6 @@ void plateau::piocherCarte(joueur &j, int type) {
     else {
         c = d_piocheChance.front();
     }
-    std::cout << "ici";
     c->action(j);
     if (type == DT_COMMUNAUTE){
         d_piocheCaisseCommunaute.pop();

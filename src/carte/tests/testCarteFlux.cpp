@@ -12,18 +12,20 @@ TEST_CASE ("tester methode lie a la classe CarteFlux") {
 
     joueur j{"Testeur"};
 
-    int argentAvantFlux = j.getArgent();
+
 
             SUBCASE("Flux positiv") {
         fluxArgent = 200;
         carteFlux carte{"Deplacement", fluxArgent};
+        int argentAvantFlux = j.getArgent();
         carte.action(j);
-                REQUIRE_EQ(j.getArgent(), argentAvantFlux + fluxArgent);
+                REQUIRE_EQ(j.getArgent(),argentAvantFlux + fluxArgent);
     }
 
             SUBCASE("Flux negativ") {
         fluxArgent = -300;
-        carteAllerVers carte{"Deplacement", fluxArgent};
+        carteFlux carte{"Deplacement", fluxArgent};
+        int argentAvantFlux = j.getArgent();
         carte.action(j);
                 REQUIRE_EQ(j.getArgent(), argentAvantFlux + fluxArgent);
     }

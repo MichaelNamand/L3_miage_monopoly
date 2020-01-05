@@ -15,6 +15,8 @@ public:
     static vector<joueur> d_joueurs;
     jeu(plateau &plateau);
     void lancerJeu();
+    void gererPropriete(joueur &j);
+    void gererTourJoueur(joueur &j);
     static bool getConfirmationJoueur();
     static void continuerJoueur();
     static int afficherEtRecupererChoix(const string &question, const vector<string> &choix);
