@@ -95,7 +95,14 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
         }
         SUBCASE("Hypothequer")
         {
-
+            j.acheterPropriete(r);
+            int argentAvant = j.getArgent();
+            int nbProprietesAvant = j.getProprietes(r->getType()).size();
+            int nbProprietesHypothequeeAvant = j.getProprietesHypothequees(r->getType()).size();
+            j.hypothequerPropriete(0);
+            REQUIRE_EQ(argentAvant+r->getValeurHypotheque(),j.getArgent());
+            REQUIRE_EQ(nbProprietesAvant - 1, j.getProprietes(r->getType()).size());
+            REQUIRE_EQ(nbProprietesHypothequeeAvant - 1, j.getProprietesHypothequees(r->getType()).size());
         }
     }
 

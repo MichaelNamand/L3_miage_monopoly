@@ -34,6 +34,8 @@ public:
 
     vector<propriete*> getProprietes(int type) const;
 
+    vector<propriete*> getProprietesHypothequees(int type) const;
+
     void ajouterPropriete(propriete *propriete);
 
     bool acheterPropriete(propriete *p);
