@@ -6,7 +6,7 @@
 #include "case/propriete/rue.h"
 #include <iostream>
 #include <limits>
-#include <curses.h>
+#include <conio.h>
 
 using namespace std;
 
