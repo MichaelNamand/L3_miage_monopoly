@@ -21,13 +21,9 @@ const int NB_CASES_PLATEAU = 40;
 class plateau {
 public:
     plateau();
-    void sortirDePrison(joueur &j);
     vector<caseMonopoly> proprietesRestantes() const;
-    const queue<carte*>& getPiocheChance() const;
-    const queue<carte*>& getPiocheCaisseCommunaute() const;
     void piocherCarte(joueur& j, int type);
     caseMonopoly &getCase(int index) const;
-    vector<caseMonopoly*> getCases() const;
 
 private:
     queue<carte*> d_piocheCaisseCommunaute;

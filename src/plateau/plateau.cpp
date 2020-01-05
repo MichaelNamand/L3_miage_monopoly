@@ -95,11 +95,6 @@ plateau::plateau() {
 
 }
 
-/*void plateau::sortirDePrison(joueur &j) {
-    // j.mettreEnPrison(false);
-    j.setIndexCase(10); //se déplace sur la case visite de prison
-}*/
-
 vector<caseMonopoly> plateau::proprietesRestantes() const {
     vector<caseMonopoly> p;
     for (int i = 0; i < d_cases.size(); i++) {
@@ -110,14 +105,6 @@ vector<caseMonopoly> plateau::proprietesRestantes() const {
         }*/
     }
     return p;
-}
-
-const queue<carte *> &plateau::getPiocheChance() const {
-    return d_piocheChance;
-}
-
-const queue<carte *> &plateau::getPiocheCaisseCommunaute() const {
-    return d_piocheCaisseCommunaute;
 }
 
 void plateau::piocherCarte(joueur &j, int type) {
@@ -141,8 +128,3 @@ void plateau::piocherCarte(joueur &j, int type) {
 caseMonopoly &plateau::getCase(int index) const {
     return *d_cases[index];
 }
-
-vector<caseMonopoly *> plateau::getCases() const {
-    return d_cases;
-}
-
