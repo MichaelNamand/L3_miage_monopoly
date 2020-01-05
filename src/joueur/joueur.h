@@ -34,7 +34,7 @@ public:
 
     vector<propriete*> getProprietes(int type) const;
 
-    // void ajouterPropriete(propriete propriete);
+    void ajouterPropriete(propriete propriete);
 
     bool acheterPropriete(propriete *p);
 
