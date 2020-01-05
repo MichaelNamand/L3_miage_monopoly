@@ -6,6 +6,7 @@
 #define L3_MIAGE_MONOPOLY_CASEMONOPOLY_H
 
 #include <string>
+
 class joueur;
 
 #define DT_PIOCHE 1
@@ -32,7 +33,6 @@ public :
 private :
     const string d_nom;
     const int d_type;
-
 };
 
 

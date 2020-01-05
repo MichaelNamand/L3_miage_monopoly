@@ -70,7 +70,7 @@ void jeu::lancerJeu() {
     cout << "***********************LA PARTIE COMMENCE***********************" << endl;
     // plateau d_plateau{};
     int tourJoueur = 0;
-
+    d_joueurs = joueurs;
     while (joueurs.size() != 1) {
         joueur &joueurPrecedent = joueurs[tourJoueur];
         if (joueurPrecedent.getNbDoubles() == 0) {

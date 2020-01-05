@@ -6,6 +6,7 @@
 #include "../../jeu.h"
 #include "rue.h"
 #include <iostream>
+#include <sstream>
 
 propriete::propriete(const string &nom, int prix, const std::vector<int> &loyers, int type) :
         caseMonopoly{nom, type},
@@ -57,8 +58,45 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                 std::cout << "Voulez-vous vraiment ne rien faire ? La propriete sera mise aux encheres... " << std::endl
                           << "Appuyez sur -o pour continuer ou -a pour annuler..." << std::endl;
                 if (jeu::getConfirmationJoueur()) {
+                    int enchere = 10;
+                    bool enchereTerminee = false;
+                    joueur joueurVainqueur{""};
+                    cout << "Les encheres commencent avec " << enchere << " euros.";
+                    while (!enchereTerminee) {
+                        string message = " Quel joueur souhaite encherir ?";
+                        vector<string> nomJoueurs;
+                        nomJoueurs.reserve(jeu::d_joueurs.size());
+                        for (auto &joueur : jeu::d_joueurs) {
+                            nomJoueurs.push_back(joueur.getNom());
+                        }
+                        nomJoueurs.emplace_back("Terminer les encheres");
+                        int joueurSelectionneIndex = jeu::afficherEtRecupererChoix(message, nomJoueurs)  - 1;
 
-                }
+                        if (joueurSelectionneIndex == nomJoueurs.size() - 1 && !joueurVainqueur.getNom().empty()) {
+                            enchereTerminee = true;
+                            joueurVainqueur.operation(-enchere);
+                            joueurVainqueur.ajouterPropriete(this);
+                            cout << "Le vainqueur des encheres est " << joueurVainqueur.getNom() << " qui remporte " <<
+                                 afficheCase() << " pour " << enchere << " euros !" << endl;
+                        } else {
+                            joueur joueur = jeu::d_joueurs[joueurSelectionneIndex];
+                            message = "Selectionnez le montant de votre enchere : ";
+                            vector<string> montantsEnchere =  {"1", "10", "50", "100", "500"};
+                            int enchereSelectionne = jeu::afficherEtRecupererChoix(message, montantsEnchere) - 1;
+                            stringstream geek(montantsEnchere[enchereSelectionne]);
+                            int montantEnchere = 0;
+                            geek >> montantEnchere;
+                            if (enchere + montantEnchere > joueur.getArgent()) {
+                                cout << "Vous n'avez pas le solde suffisant pour encherir cette somme." << endl;
+                            } else {
+                                joueurVainqueur = joueur;
+                                enchere += montantEnchere;
+                                cout << "L'enchere est montee a " << enchere << " euros. Dernier encherisseur : " << joueur.getNom() << endl;
+                            }
+                        }
+                    }
+
+                } else choixActions(montantPaiement, j);
                 break;
             default:
                 std::cout << "Votre choix n'est pas valide." << std::endl;
@@ -67,7 +105,7 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
         string question = "Cette case appartient a " + d_proprietaire->getNom() + ". Vous lui devez : " + std::to_string(montantPaiement)
                           + " euros. Comment souhaitez-vous regler ? Votre solde est de " + std::to_string(j.getArgent()) + " euros.";
         vector<string> choix = {"Avec mon solde" ,"En hypothequant", "En vendant mes maisons/hotels" };
-        int selection = jeu::afficherEtRecupererChoix(question, choix);
+        selection = jeu::afficherEtRecupererChoix(question, choix);
             switch (selection) {
                 case 1:
                     std::cout << "Confirmez le paiement ? Appuyez sur -o  pour continuer ou -a pour annuler...";
