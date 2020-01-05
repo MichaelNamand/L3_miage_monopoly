@@ -3,7 +3,6 @@
 //
 
 #include "rue.h"
-#include <iostream>
 using namespace std;
 
 int rue::getNbMaisons() const {

@@ -15,6 +15,9 @@ void gare::action(joueur &j) {
 }
 
 int gare::getLoyer(joueur &j) const {
-    return d_loyers[getProprietaire()->getProprietes(DT_GARE).size() - 1];
+    if (getProprietaire())
+        return d_loyers[getProprietaire()->getProprietes(DT_GARE).size() - 1];
+    else
+        return getPrix();
 }
 

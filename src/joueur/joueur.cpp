@@ -76,26 +76,26 @@ void joueur::operation(int argent) {
 void joueur::ajouterCartePrison() {
     carteSortiePrison carte = carteSortiePrison{"Tu as gagner une carte prison"};
 
-    d_cartesSortiePrison.pop_back();
+    d_cartesSortiePrison.push_back(carte);
 }
 
 void joueur::utiliserCartePrison() {
     if (d_cartesSortiePrison.size() > 0) {
-        d_cartesSortiePrison.erase(d_cartesSortiePrison.begin());
+        d_cartesSortiePrison.pop_back();
     }
 
 }
 
 void joueur::vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente) {
+    j.ajouterPropriete(d_proprietes[numeroPropriete]);
     d_proprietes.erase(d_proprietes.begin() + numeroPropriete);
     j.operation(-prixDeVente);
     operation(prixDeVente);
-
 }
 
-void joueur::hypothequerPropriete(propriete *propriete, int index) {
-    operation(propriete->getValeurHypotheque());
-    d_proprietesHypothequees.push_back(propriete);
+void joueur::hypothequerPropriete(int index) {
+    operation(d_proprietes[index]->getValeurHypotheque());
+    d_proprietesHypothequees.push_back(d_proprietes[index]);
     d_proprietes.erase(d_proprietes.begin() + index);
 }
 
@@ -120,8 +120,7 @@ bool joueur::estEnPrison() const {
 bool joueur::acheterPropriete(propriete *p) {
     if (d_argent >= p->getPrix()) {
         operation(-p->getPrix());
-        d_proprietes.push_back(p);
-        p->setProprietaire(this);
+        ajouterPropriete(p);
         return true;
     } else {
         return false;
@@ -195,4 +194,9 @@ bool joueur::achatMaisonsHotels(int nbMaison, int nbHotels, rue *r) {
         cout << "Les valeurs saisies n'ont pas permis d'effectuer la vente..." << endl;
         return false;
     }
+}
+
+void joueur::ajouterPropriete(propriete *p) {
+    d_proprietes.push_back(p);
+    p->setProprietaire(this);
 }

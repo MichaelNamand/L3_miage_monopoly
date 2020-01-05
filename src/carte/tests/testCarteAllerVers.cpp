@@ -2,7 +2,7 @@
 // Created by Administrator on 05.01.2020.
 //
 
-#include "doctest.h"
+#include "../../../includes/doctest.h"
 
 TEST_CASE("tester methode lie a la classe CarteAllerVers"){
 int numeroCase = 10;
