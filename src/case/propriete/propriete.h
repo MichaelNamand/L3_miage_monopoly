@@ -25,7 +25,7 @@ public:
 
     void action(joueur &j) override;
     void setProprietaire(joueur *j);
-    joueur *getProprietaire();
+    joueur *getProprietaire() const;
     void afficherResultatPaiement(bool succes, joueur &j);
     void choixActions(int montantPaiement, joueur &j);
     int getValeurHypotheque() const;

@@ -16,6 +16,8 @@ class joueur;
 #define DT_ALLERPRISON 6
 #define DT_ATTENTE 7
 #define DT_ALL 8
+#define DT_PRISON 9
+
 using std::string;
 
 class caseMonopoly {
