@@ -145,5 +145,14 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
                 REQUIRE_UNARY(j.estEnPrison());
     }
 
+    SUBCASE("Payer une redevance à un joueur") {
+        joueur *j2 = new joueur{"receveur"};
+        int argentReceveurAvant = j2->getArgent();
+        int argentAvant = j.getArgent();
+        j.payerRedevanceJoueur(j2,50);
+        REQUIRE_EQ(argentReceveurAvant+50,j2->getArgent());
+        REQUIRE_EQ(argentAvant-50,j.getArgent());
+    }
+
 
 }
