@@ -60,7 +60,7 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                 if (jeu::getConfirmationJoueur()) {
                     int enchere = 10;
                     bool enchereTerminee = false;
-                    joueur joueurVainqueur{""};
+                    joueur *joueurVainqueur = nullptr;
                     cout << "Les encheres commencent avec " << enchere << " euros.";
                     while (!enchereTerminee) {
                         string message = " Quel joueur souhaite encherir ?";
@@ -72,26 +72,27 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                         nomJoueurs.emplace_back("Terminer les encheres");
                         int joueurSelectionneIndex = jeu::afficherEtRecupererChoix(message, nomJoueurs)  - 1;
 
-                        if (joueurSelectionneIndex == nomJoueurs.size() - 1 && !joueurVainqueur.getNom().empty()) {
+                        if (joueurSelectionneIndex == nomJoueurs.size() - 1 && joueurVainqueur) {
                             enchereTerminee = true;
-                            joueurVainqueur.operation(-enchere);
-                            joueurVainqueur.ajouterPropriete(this);
-                            cout << "Le vainqueur des encheres est " << joueurVainqueur.getNom() << " qui remporte " <<
-                                 afficheCase() << " pour " << enchere << " euros !" << endl;
+                            joueurVainqueur->operation(-enchere);
+                            joueurVainqueur->ajouterPropriete(this);
+                            cout << "Le vainqueur des encheres est " << joueurVainqueur->getNom() << " qui remporte " <<
+                                 afficheCase() << " pour " << enchere << " euros ! Son nouveau solde est de " << joueurVainqueur->getArgent()
+                                 << " euros." << endl;
                         } else {
-                            joueur joueur = jeu::d_joueurs[joueurSelectionneIndex];
+                            joueur *joueur = &jeu::d_joueurs[joueurSelectionneIndex];
                             message = "Selectionnez le montant de votre enchere : ";
                             vector<string> montantsEnchere =  {"1", "10", "50", "100", "500"};
                             int enchereSelectionne = jeu::afficherEtRecupererChoix(message, montantsEnchere) - 1;
                             stringstream geek(montantsEnchere[enchereSelectionne]);
                             int montantEnchere = 0;
                             geek >> montantEnchere;
-                            if (enchere + montantEnchere > joueur.getArgent()) {
+                            if (enchere + montantEnchere > joueur->getArgent()) {
                                 cout << "Vous n'avez pas le solde suffisant pour encherir cette somme." << endl;
                             } else {
                                 joueurVainqueur = joueur;
                                 enchere += montantEnchere;
-                                cout << "L'enchere est montee a " << enchere << " euros. Dernier encherisseur : " << joueur.getNom() << endl;
+                                cout << "L'enchere est montee a " << enchere << " euros. Dernier encherisseur : " << joueur->getNom() << endl;
                             }
                         }
                     }
