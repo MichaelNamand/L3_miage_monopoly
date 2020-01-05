@@ -113,6 +113,16 @@ vector<propriete*> joueur::getProprietes(int type) const {
     return tableauTemporaire;
 }
 
+vector<propriete*> joueur::getProprietesHypothequees(int type) const {
+    vector<propriete*> tableauTemporaire;
+    for (int i = 0; i < d_proprietesHypothequees.size(); ++i) {
+        if (type == d_proprietesHypothequees[i]->getType() || type == DT_ALL) {
+            tableauTemporaire.push_back(d_proprietesHypothequees[i]);
+        }
+    }
+    return tableauTemporaire;
+}
+
 bool joueur::estEnPrison() const {
     return d_estEnPrison;
 }
