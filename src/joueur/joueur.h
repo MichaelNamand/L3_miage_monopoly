@@ -34,11 +34,9 @@ public:
 
     vector<propriete*> getProprietes(int type) const;
 
-    void ajouterPropriete(propriete propriete);
+    void ajouterPropriete(propriete *propriete);
 
     bool acheterPropriete(propriete *p);
-
-    void ajouterPropriete(propriete *p);
 
     bool payerRedevanceJoueur(joueur *j, int montantRedevance);
 

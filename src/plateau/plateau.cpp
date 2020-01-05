@@ -3,6 +3,7 @@
 //
 
 #include "plateau.h"
+#include <iostream>
 
 using namespace std;
 
@@ -122,11 +123,12 @@ const queue<carte *> &plateau::getPiocheCaisseCommunaute() const {
 void plateau::piocherCarte(joueur &j, int type) {
     carte *c;
     if (type == DT_COMMUNAUTE){
-        c = d_piocheChance.front();
-    }
-    else {
         c = d_piocheCaisseCommunaute.front();
     }
+    else {
+        c = d_piocheChance.front();
+    }
+    std::cout << "ici";
     c->action(j);
     if (type == DT_COMMUNAUTE){
         d_piocheCaisseCommunaute.pop();
