@@ -42,7 +42,7 @@ public:
 
     void vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente);
 
-    void hypothequerPropriete(propriete *popriete, int index);
+    void hypothequerPropriete(int index);
 
     bool vendreMaisonsHotels(int nbMaison, int nbHotels, rue *r);
 
