@@ -32,10 +32,13 @@ public:
     int getValeurHypotheque() const;
     int getPrix() const;
     int getType() const;
+    bool estHypothequee() const;
+    void setHypotheque(bool estHypothequee);
     virtual string affichePropriete() const;
 
 private:
     int d_type;
+    bool d_estHypothequee = false;
 };
 
 

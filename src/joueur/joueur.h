@@ -46,6 +46,8 @@ public:
 
     bool vendreMaisonsHotels(int nbMaison, int nbHotels, rue *r);
 
+    bool achatMaisonsHotels(int nbMaison, int nbHotels, rue *r);
+
     void deplacerA(int indexCase, bool enAvancant);
 
     void ajouterCartePrison();

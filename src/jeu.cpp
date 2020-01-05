@@ -131,18 +131,77 @@ void jeu::lancerJeu() {
             }
                 break;
             case 2: {
-                string message = "Voici la liste de vos biens. Selectionnez celle que vous voulez gerer :";
-                vector<string> choixListe;
-                for (auto &prop : j.getProprietes(DT_ALL)) {
-                    choixListe.push_back(prop->affichePropriete());
-                }
-                int selectionProp = jeu::afficherEtRecupererChoix(message, choixListe);
-                propriete *propChoisi = j.getProprietes(DT_ALL)[selectionProp];
-                message = "Que voulez-vous faire avec cette propriete ?";
-                vector<string> choixPropriete = {"Hypothequer"};
-                if (rue *r = dynamic_cast<rue *>(propChoisi)) {
-                    choixPropriete.emplace_back("Acheter des maisons");
-                    choixPropriete.emplace_back("Acheter des hotels");
+                while (jeu::getConfirmationJoueur()) {
+                    if (!j.getProprietes(DT_ALL).empty())  {
+                        string message = "Voici la liste de vos biens. Selectionnez celle que vous voulez gerer :";
+                        vector<string> choixListe;
+                        for (auto &prop : j.getProprietes(DT_ALL)) {
+                            choixListe.push_back(prop->affichePropriete());
+                        }
+                        int selectionProp = jeu::afficherEtRecupererChoix(message, choixListe);
+                        propriete *propChoisi = j.getProprietes(DT_ALL)[selectionProp];
+                        message = "Que voulez-vous faire avec cette propriete ?";
+                        vector<string> choixPropriete;
+                        if (propChoisi->estHypothequee()) {
+                            choixPropriete.emplace_back("Retirer l'hypotheque");
+                        } else {
+                            choixPropriete.emplace_back("Hypothequer");
+                        }
+                        if (rue *r = dynamic_cast<rue *>(propChoisi)) {
+                            choixPropriete.emplace_back("Acheter des maisons");
+                            choixPropriete.emplace_back("Acheter des hotels");
+                        }
+                        int selectionAction = jeu::afficherEtRecupererChoix(message, choixPropriete);
+                        switch (selectionAction) {
+                            case 1: {
+                                if (propChoisi->estHypothequee()) {
+                                    cout << "Confirmer ? Vous recevrez " << propChoisi->getValeurHypotheque() << " euros pour" <<
+                                         " la mise en hypotheque de ce bien" << endl;
+                                    if (jeu::getConfirmationJoueur()) {
+                                        propChoisi->setHypotheque(true);
+                                        j.operation(propChoisi->getValeurHypotheque());
+                                        cout << "Votre bien a bien ete hypotheque. Votre nouveau solde est de " << j.getArgent() <<
+                                             " euros." << endl;
+                                        jeu::continuerJoueur();
+                                    }
+                                } else {
+                                    cout << "Confirmer ? Vous devrez payer " << propChoisi->getValeurHypotheque() << " euros pour" <<
+                                         " retirer l'hypotheque de ce bien" << endl;
+                                    if (jeu::getConfirmationJoueur()) {
+                                        propChoisi->setHypotheque(false);
+                                        j.operation(-propChoisi->getValeurHypotheque());
+                                        cout << "Votre bien est de nouveau disponible. Votre nouveau solde est de " << j.getArgent() <<
+                                             " euros." << endl;
+                                        jeu::continuerJoueur();
+                                    }
+                                }
+                            }
+                                break;
+                            case 2: {
+                                if (rue *r = dynamic_cast<rue *>(propChoisi)) {
+                                    if (r->getGroupeCouleur().sontToutesPossedeesParJoueur(j)) {
+                                        int nbHotels, nbMaisons;
+                                        cout << "Renseignez le nombre de maisons et d'hotels a constuire : " << endl;
+                                        cin >> nbHotels >> nbMaisons;
+                                        int prixTotal = r->getPrixVenteHotelsMaisons(nbMaisons, nbHotels);
+                                        if (prixTotal <= j.getArgent()) {
+                                            cout << "Confirmer ? Vous devrez payer au total " << prixTotal << " euros.";
+                                            if (jeu::getConfirmationJoueur() && j.achatMaisonsHotels(nbMaisons, nbHotels, r)) {
+                                                cout << "L'operation s'est bien passee. Votre nouveau solde est de " << j.getArgent()
+                                                << " euros. Votre rue possede maintenant " << r->getNbMaisons() << " maison(s) et " <<
+                                                r->getNbHotels() << " hotel(s)." << endl;
+                                            }
+                                        }
+                                    } else {
+                                        cout << "Vous ne pouvez rien construire tant que vous ne possedez pas toute les cartes d'une famille !" << endl;
+                                    }
+                                }
+
+                            }
+                        }
+                    } else {
+                        cout << "Vous ne possédez aucune propriete !";
+                    }
                 }
             }
             break;

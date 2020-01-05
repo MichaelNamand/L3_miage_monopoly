@@ -60,13 +60,10 @@ void joueur::gagnerSalaire() {
 }
 
 void joueur::deplacerA(int indexCase, bool enAvancant) {
-    cout << "Nouvel index : " << indexCase;
     int max = DT_NB_CASES_PLATEAU;
     if(enAvancant && indexCase >= max){
-        cout << " > max => ";
         gagnerSalaire();
         d_indexCase = indexCase - max;
-        cout << "indexReel = " << d_indexCase;
     } else {
         d_indexCase = indexCase;
     }
@@ -183,6 +180,16 @@ joueur::~joueur() {
 bool joueur::vendreMaisonsHotels(int nbMaison, int nbHotels, rue *r) {
     if (nbMaison > 0 && nbHotels > 0 && nbHotels <= r->getNbHotels() && nbMaison <= r->getNbMaisons()) {
         operation(r->getPrixVenteHotelsMaisons(nbMaison, nbHotels));
+        return true;
+    } else {
+        cout << "Les valeurs saisies n'ont pas permis d'effectuer la vente..." << endl;
+        return false;
+    }
+}
+
+bool joueur::achatMaisonsHotels(int nbMaison, int nbHotels, rue *r) {
+    if (r->getPrixVenteHotelsMaisons(nbMaison, nbHotels) <= getArgent()) {
+        operation(-r->getPrixVenteHotelsMaisons(nbMaison, nbHotels));
         return true;
     } else {
         cout << "Les valeurs saisies n'ont pas permis d'effectuer la vente..." << endl;

@@ -109,8 +109,8 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                     if (rue* r = dynamic_cast<rue*>(selectionProp)) {
                         if (nbHotels > r->getNbHotels()) nbHotels = r->getNbHotels();
                         if (nbMaisons > r->getNbMaisons()) nbMaisons = r->getNbMaisons();
-                        cout << "Confirmer ? Vous recevrez (" << nbMaisons << " * " << r->getPrixMaison() << ") + (" <<
-                            nbHotels * r->getPrixHotel() << ") = " << r->getPrixVenteHotelsMaisons(nbMaisons, nbHotels) << " euros pour "
+                        cout << "Confirmer ? Vous recevrez (" << nbMaisons << " * " << r->getPrixMaisonVente() << ") + (" <<
+                            nbHotels * r->getPrixHotelVente() << ") = " << r->getPrixVenteHotelsMaisons(nbMaisons, nbHotels) << " euros pour "
                              << selectionProp->afficheCase() << "." << endl;
                         if (jeu::getConfirmationJoueur() && j.vendreMaisonsHotels(nbMaisons, nbHotels, r))
                             cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
@@ -139,4 +139,12 @@ joueur *propriete::getProprietaire() {
 
 string propriete::affichePropriete() const {
     return "Nom : " + afficheCase() + "\nValeur hypotheque : " + to_string(getValeurHypotheque()) + '\n';
+}
+
+bool propriete::estHypothequee() const {
+    return d_estHypothequee;
+}
+
+void propriete::setHypotheque(bool estHypothequee) {
+    d_estHypothequee = estHypothequee;
 }

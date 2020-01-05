@@ -6,6 +6,7 @@
 #define L3_MIAGE_MONOPOLY_GROUPECOULEUR_H
 
 #include <string>
+#include "../../joueur/joueur.h"
 
 #define DT_BLEU "Bleu"
 #define DT_BLEU_CIEL "Bleu ciel"
@@ -23,7 +24,7 @@ private:
 
 public:
     groupeCouleur(const std::string &couleur, int nbMaxCouleurs);
-    bool sontToutesPossedeesParJoueur() const;
+    bool sontToutesPossedeesParJoueur(joueur &j) const;
     string getCouleur() const;
 };
 

@@ -17,9 +17,9 @@ using namespace std;
 #include "../case/attente.h"
 
 plateau::plateau() {
-    d_cases.push_back(new rue{"Boulevard de Belleville", DT_MARRON, 30, 60, {1, 2, 4, 8}, 2, 100, 200});
+    d_cases.push_back(new rue{"Boulevard de Belleville", DT_MARRON, 30, 60, {1, 2, 4, 8}, 2, 100, 200, 50, 100});
     d_cases.push_back(new pioche{"Caisse de communaute", DT_COMMUNAUTE, this});
-    d_cases.push_back(new rue{"Rue Lecourbe", DT_MARRON, 40, 70, {2, 3, 5, 9}, 2, 100, 200});
+    d_cases.push_back(new rue{"Rue Lecourbe", DT_MARRON, 40, 70, {2, 3, 5, 9}, 2, 100, 200, 50, 100});
     d_cases.push_back(new servicePublic{"Compagnie de distribution d'electricite", 75, 140});
     d_cases.push_back(new gare{"Gare de Lyon", 75, 140, {25, 50, 100, 200}});
     d_cases.push_back(new pioche{"Chance", DT_CHANCE, this});
