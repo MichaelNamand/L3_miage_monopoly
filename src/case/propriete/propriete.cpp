@@ -132,7 +132,7 @@ void propriete::setProprietaire(joueur *j) {
     d_proprietaire = j;
 }
 
-joueur *propriete::getProprietaire() {
+joueur *propriete::getProprietaire() const{
     return d_proprietaire;
 }
 
