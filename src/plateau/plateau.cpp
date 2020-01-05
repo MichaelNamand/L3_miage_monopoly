@@ -95,10 +95,10 @@ plateau::plateau() {
 
 }
 
-void plateau::sortirDePrison(joueur &j) {
+/*void plateau::sortirDePrison(joueur &j) {
     // j.mettreEnPrison(false);
-    j.deplacerA(10, false); //se déplace sur la case visite de prison
-}
+    j.setIndexCase(10); //se déplace sur la case visite de prison
+}*/
 
 vector<caseMonopoly> plateau::proprietesRestantes() const {
     vector<caseMonopoly> p;
