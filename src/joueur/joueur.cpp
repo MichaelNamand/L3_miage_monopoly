@@ -87,6 +87,7 @@ void joueur::utiliserCartePrison() {
 }
 
 void joueur::vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente) {
+    j.ajouterPropriete(d_proprietes[numeroPropriete]);
     d_proprietes.erase(d_proprietes.begin() + numeroPropriete);
     j.operation(-prixDeVente);
     operation(prixDeVente);
