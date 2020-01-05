@@ -19,6 +19,5 @@ allerEnPrison::~allerEnPrison() {}
 void allerEnPrison::action(joueur& j) {
     cout<<j.getNom()<<" va en prison !";
     j.setEnPrison(true);
-    j.setIndexCase(10);  //de la case AllezPrison à la case EnPrison/VisitePrison
-    //nombre négatif pour ne pas gagner 200 euros de CaseDepart
+    j.setIndexCase(10);
 }

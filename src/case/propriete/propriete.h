@@ -12,8 +12,7 @@
 using namespace std;
 
 class propriete : public caseMonopoly {
-private:
-    int d_prix;
+
 
 protected:
     vector<int> d_loyers;
@@ -36,6 +35,7 @@ public:
     virtual string affichePropriete() const;
 
 private:
+    int d_prix;
     int d_type;
     bool d_estHypothequee = false;
 };
