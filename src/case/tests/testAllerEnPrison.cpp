@@ -10,6 +10,6 @@ TEST_CASE("Test sur l'action aller en prison")
     joueur j{"testeur"};
     allerEnPrison c{"Aller en prison",DT_ALLERPRISON};
     c.action(j);
-    REQUIRE_EQ(20,j.getIndexCase());
+    REQUIRE_EQ(10,j.getIndexCase());
 }
 
