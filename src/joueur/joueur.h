@@ -30,6 +30,8 @@ public:
 
     int getIndexCase() const;
 
+    void setIndexCase(int index);
+
     vector<carteSortiePrison> getCartesSortiePrison() const;
 
     vector<propriete*> getProprietes(int type) const;
@@ -50,7 +52,7 @@ public:
 
     bool achatMaisonsHotels(int nbMaison, int nbHotels, rue *r);
 
-    void deplacerA(int indexCase, bool enAvancant);
+    void deplacerDe(int nbCases);
 
     void ajouterCartePrison();
 

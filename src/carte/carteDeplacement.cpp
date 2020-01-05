@@ -12,5 +12,8 @@ carteDeplacement::carteDeplacement(const string &texte, int cases, bool sensNorm
 void carteDeplacement::action(joueur &j) {
     std::cout << afficheCarte() << std::endl;
 
-    j.deplacerA(d_cases, d_sensNormal);
+    if(d_cases < j.getIndexCase()) {
+        j.gagnerSalaire();
+    }
+    j.setIndexCase(d_cases);
 }

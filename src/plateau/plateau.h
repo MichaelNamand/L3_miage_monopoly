@@ -12,10 +12,11 @@
 #include "../joueur/joueur.h"
 #include "../case/propriete/propriete.h"
 
-#define DT_NB_CASES_PLATEAU 40;
 
 using std::queue;
 using std::vector;
+
+const int NB_CASES_PLATEAU = 40;
 
 class plateau {
 public:

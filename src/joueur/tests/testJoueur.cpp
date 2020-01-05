@@ -25,11 +25,11 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
     SUBCASE("Deplacer vers une case et verifier si le salaire est donne")
     {
         int argentAvant = j.getArgent();
-        j.deplacerA(20, true);
+        j.deplacerDe(20);
                 REQUIRE_EQ(argentAvant, j.getArgent());
                 REQUIRE_EQ(20, j.getIndexCase());
 
-        j.deplacerA(30, true);
+        j.deplacerDe(30);
                 REQUIRE_EQ(argentAvant + 200, j.getArgent());
                 REQUIRE_EQ(10, j.getIndexCase());
     }

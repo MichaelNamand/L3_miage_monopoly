@@ -12,7 +12,7 @@
 
 using namespace std;
 
-joueur::joueur(const string &nom): d_nom{nom} {
+joueur::joueur(const string &nom) : d_nom{nom} {
     d_argent = 1500;
     d_indexCase = 0;
     d_nbTourPrison = 0;
@@ -26,6 +26,9 @@ int joueur::getIndexCase() const {
     return d_indexCase;
 }
 
+void joueur::setIndexCase(int index) {
+    d_indexCase = index;
+}
 
 vector<carteSortiePrison> joueur::getCartesSortiePrison() const {
     return d_cartesSortiePrison;
@@ -37,15 +40,10 @@ int joueur::getTourEnPrison() const {
 
 void joueur::setEnPrison(bool estEnPrison) {
     d_estEnPrison = estEnPrison;
-    if (estEnPrison) {
-        int tmp = getIndexCase();
-        int casePrison = 10;
-        deplacerA(casePrison - tmp, false);
-    }
 }
 
 vector<int> joueur::lancerDes() {
-    srand (time(NULL));
+    srand(time(NULL));
     vector<int> des;
     des.push_back(rand() % 6 + 1);
     des.push_back(rand() % 6 + 1);
@@ -54,18 +52,18 @@ vector<int> joueur::lancerDes() {
 }
 
 void joueur::gagnerSalaire() {
-    d_argent += 200;
-    cout << "Vous venez de passer par la case Depart ! Recevez 200 euros. Votre nouveau solde est de " << getArgent() << "euros" << endl;
+    operation(200);
+    cout << "Vous venez de passer par la case Depart ! Recevez 200 euros. Votre nouveau solde est de " << getArgent()
+         << "euros" << endl;
     jeu::continuerJoueur();
 }
 
-void joueur::deplacerA(int indexCase, bool enAvancant) {
-    int max = DT_NB_CASES_PLATEAU;
-    if(enAvancant && (indexCase+d_indexCase) >= max){
+void joueur::deplacerDe(int nbCases) {
+    if (d_indexCase + nbCases >= NB_CASES_PLATEAU) {
+        d_indexCase += nbCases - NB_CASES_PLATEAU;
         gagnerSalaire();
-        d_indexCase = indexCase+d_indexCase - max;
     } else {
-        d_indexCase = indexCase;
+        d_indexCase += nbCases;
     }
 }
 
@@ -103,8 +101,8 @@ string joueur::getNom() const {
     return d_nom;
 }
 
-vector<propriete*> joueur::getProprietes(int type) const {
-    vector<propriete*> tableauTemporaire;
+vector<propriete *> joueur::getProprietes(int type) const {
+    vector<propriete *> tableauTemporaire;
     for (int i = 0; i < d_proprietes.size(); ++i) {
         if (type == d_proprietes[i]->getType() || type == DT_ALL) {
             tableauTemporaire.push_back(d_proprietes[i]);
@@ -113,8 +111,8 @@ vector<propriete*> joueur::getProprietes(int type) const {
     return tableauTemporaire;
 }
 
-vector<propriete*> joueur::getProprietesHypothequees(int type) const {
-    vector<propriete*> tableauTemporaire;
+vector<propriete *> joueur::getProprietesHypothequees(int type) const {
+    vector<propriete *> tableauTemporaire;
     for (int i = 0; i < d_proprietesHypothequees.size(); ++i) {
         if (type == d_proprietesHypothequees[i]->getType() || type == DT_ALL) {
             tableauTemporaire.push_back(d_proprietesHypothequees[i]);

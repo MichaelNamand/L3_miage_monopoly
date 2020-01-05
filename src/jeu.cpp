@@ -258,7 +258,7 @@ void jeu::gererTourJoueur(joueur &j) {
                 }
             }
             if (!j.estEnPrison()) {
-                j.deplacerA(j.getIndexCase() + valeurDes[0] + valeurDes[1], true);
+                j.deplacerDe(j.getIndexCase() + valeurDes[0] + valeurDes[1]);
                 d_plateau.getCase(j.getIndexCase()).action(j);
             }
         }
