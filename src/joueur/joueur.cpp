@@ -93,9 +93,9 @@ void joueur::vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente) {
     operation(prixDeVente);
 }
 
-void joueur::hypothequerPropriete(propriete *propriete, int index) {
-    operation(propriete->getValeurHypotheque());
-    d_proprietesHypothequees.push_back(propriete);
+void joueur::hypothequerPropriete(int index) {
+    operation(d_proprietes[index]->getValeurHypotheque());
+    d_proprietesHypothequees.push_back(d_proprietes[index]);
     d_proprietes.erase(d_proprietes.begin() + index);
 }
 
