@@ -10,18 +10,18 @@ int argentAvantFlux = j.getArgent;
 
 joueur j{"Testeur"};
 
-    SUB_CASE("Deplacement sens normal"){
+    SUB_CASE("Flux positiv"){
         fluxArgent = 200;
         carteFlux carte{"Deplacement", fluxArgent};
         carte.action(j);
-        REQUIERE_EQ(j.getIndexCase(), argentAvantFlux+fluxArgent);
+        REQUIERE_EQ(j.getArgent(), argentAvantFlux+fluxArgent);
     }
 
-    SUB_CASE("Deplacement sens inverse"){
+    SUB_CASE("Flux negativ"){
         fluxArgent = -300;
         carteAllerVers carte{"Deplacement", fluxArgent};
         carte.action(j);
-        REQUIERE_EQ(j.getIndexCase(), argentAvantFlux+fluxArgent);
+        REQUIERE_EQ(j.getArgent(), argentAvantFlux+fluxArgent);
     }
 
 }
