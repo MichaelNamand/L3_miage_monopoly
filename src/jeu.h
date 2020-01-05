@@ -12,6 +12,7 @@ class jeu {
 private:
     plateau d_plateau;
 public:
+    static vector<joueur> d_joueurs;
     jeu(plateau &plateau);
     void lancerJeu();
     static bool getConfirmationJoueur();

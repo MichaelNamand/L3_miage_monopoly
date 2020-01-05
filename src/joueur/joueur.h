@@ -38,6 +38,8 @@ public:
 
     bool acheterPropriete(propriete *p);
 
+    void ajouterPropriete(propriete *p);
+
     bool payerRedevanceJoueur(joueur *j, int montantRedevance);
 
     void vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente);

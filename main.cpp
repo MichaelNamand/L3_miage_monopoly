@@ -5,7 +5,7 @@
 #include "src/jeu.h"
 
 using namespace std;
-
+vector<joueur> jeu::d_joueurs;
 
 void afficherListeJoueurs(vector<joueur> &joueurs) {
     cout << "Liste des joueurs inscrits : " << endl;

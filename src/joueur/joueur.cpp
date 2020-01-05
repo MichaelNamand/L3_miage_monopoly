@@ -119,8 +119,7 @@ bool joueur::estEnPrison() const {
 bool joueur::acheterPropriete(propriete *p) {
     if (d_argent >= p->getPrix()) {
         operation(-p->getPrix());
-        d_proprietes.push_back(p);
-        p->setProprietaire(this);
+        ajouterPropriete(p);
         return true;
     } else {
         return false;
@@ -194,4 +193,9 @@ bool joueur::achatMaisonsHotels(int nbMaison, int nbHotels, rue *r) {
         cout << "Les valeurs saisies n'ont pas permis d'effectuer la vente..." << endl;
         return false;
     }
+}
+
+void joueur::ajouterPropriete(propriete *p) {
+    d_proprietes.push_back(p);
+    p->setProprietaire(this);
 }
