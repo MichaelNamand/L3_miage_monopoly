@@ -11,10 +11,10 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
     SUBCASE("Le résultat des des doivent etre entre 1 et 6 chacun")
     {
         vector<int> des = j.lancerDes();
-                REQUIRE_GE(1, des[0]);
-                REQUIRE_GE(1, des[1]);
-                REQUIRE_LE(6, des[0]);
-                REQUIRE_LE(6, des[1]);
+                REQUIRE_LE(1, des[0]);
+                REQUIRE_GE(6, des[0]);
+                REQUIRE_LE(1, des[1]);
+                REQUIRE_GE(6, des[1]);
     }
     SUBCASE("Si le joueur gagne un salaire son argent augmente de 200")
     {
@@ -22,14 +22,14 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
         j.gagnerSalaire();
                 REQUIRE_EQ(argentAvant + 200, j.getArgent());
     }
-    SUBCASE("Deplacer vers une case")
+    SUBCASE("Deplacer vers une case et verifier si le salaire est donne")
     {
         int argentAvant = j.getArgent();
         j.deplacerA(20, true);
                 REQUIRE_EQ(argentAvant, j.getArgent());
                 REQUIRE_EQ(20, j.getIndexCase());
 
-        j.deplacerA(10, true);
+        j.deplacerA(30, true);
                 REQUIRE_EQ(argentAvant + 200, j.getArgent());
                 REQUIRE_EQ(10, j.getIndexCase());
     }
@@ -82,16 +82,17 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
         SUBCASE("Vendre une propriete")
         {
             joueur j2{"Acheteur"};
-            int argentAvant = j.getArgent();
+
+            j.acheterPropriete(r);
             int nbProprietesAvant = j.getProprietes(r->getType()).size();
             int argentAcheteurAvant = j2.getArgent();
             int nbProprietesAcheteurAvant = j2.getProprietes(r->getType()).size();
-            j.acheterPropriete(r);
+            int argentAvant = j.getArgent();
             j.vendrePropriete(j2, 0, 100);
                     REQUIRE_EQ(argentAvant + 100, j.getArgent());
                     REQUIRE_EQ(nbProprietesAvant, j.getProprietes(r->getType()).size() + 1);
-                    REQUIRE_EQ(argentAcheteurAvant, j.getArgent() + 100);
-                    REQUIRE_EQ(nbProprietesAcheteurAvant + 1, j.getProprietes(r->getType()).size());
+                    REQUIRE_EQ(argentAcheteurAvant, j2.getArgent() + 100);
+                    REQUIRE_EQ(nbProprietesAcheteurAvant + 1, j2.getProprietes(r->getType()).size());
         }
         SUBCASE("Hypothequer")
         {
@@ -102,7 +103,7 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
             j.hypothequerPropriete(0);
             REQUIRE_EQ(argentAvant+r->getValeurHypotheque(),j.getArgent());
             REQUIRE_EQ(nbProprietesAvant - 1, j.getProprietes(r->getType()).size());
-            REQUIRE_EQ(nbProprietesHypothequeeAvant - 1, j.getProprietesHypothequees(r->getType()).size());
+            REQUIRE_EQ(nbProprietesHypothequeeAvant+1 , j.getProprietesHypothequees(r->getType()).size());
         }
     }
 
@@ -123,7 +124,8 @@ TEST_CASE ("Tests sur les méthodes liees au joueur") {
     SUBCASE("Verifie et ajoute les tour en prison, il reste en prison")
     {
 //pour simuler que le jouer etait pendant 2 tour en prison
-        j.setEnPrison(2);
+        j.ajouterEtVerifierTourEnPrison();
+        j.ajouterEtVerifierTourEnPrison();
 
         REQUIRE_UNARY(j.ajouterEtVerifierTourEnPrison());
     }

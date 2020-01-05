@@ -61,9 +61,9 @@ void joueur::gagnerSalaire() {
 
 void joueur::deplacerA(int indexCase, bool enAvancant) {
     int max = DT_NB_CASES_PLATEAU;
-    if(enAvancant && indexCase >= max){
+    if(enAvancant && (indexCase+d_indexCase) >= max){
         gagnerSalaire();
-        d_indexCase = indexCase - max;
+        d_indexCase = indexCase+d_indexCase - max;
     } else {
         d_indexCase = indexCase;
     }
