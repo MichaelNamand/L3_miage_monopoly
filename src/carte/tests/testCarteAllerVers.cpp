@@ -3,13 +3,14 @@
 //
 
 #include "../../../includes/doctest.h"
+#include "../carteAllerVers.h"
 
-TEST_CASE("tester methode lie a la classe CarteAllerVers"){
-int numeroCase = 10;
-carteAllerVers carte{"Direction Vers", numeroCase};
-joueur j{"Testeur"};
+TEST_CASE ("tester methode lie a la classe CarteAllerVers") {
+    int numeroCase = 10;
+    carteAllerVers carte{"Direction Vers la case 10", numeroCase};
+    joueur j{"Testeur"};
 
-carte.action(j);
-REQUIERE_EQ(j.getIndexCase(), numeroCase);
+    carte.action(j);
+    REQUIRE_EQ(j.getIndexCase(), numeroCase-1);
 
 }
