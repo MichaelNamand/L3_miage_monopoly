@@ -61,11 +61,11 @@ void joueur::gagnerSalaire() {
 
 void joueur::deplacerA(int indexCase, bool enAvancant) {
     int max = DT_NB_CASES_PLATEAU;
-    if(enAvancant && indexCase - 1 >= max){
+    if(enAvancant && indexCase >= max){
         gagnerSalaire();
-        d_indexCase = indexCase - max - 1;
+        d_indexCase = indexCase - max;
     } else {
-        d_indexCase = indexCase - 1;
+        d_indexCase = indexCase;
     }
 }
 
@@ -93,9 +93,9 @@ void joueur::vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente) {
     operation(prixDeVente);
 }
 
-void joueur::hypothequerPropriete(propriete *propriete, int index) {
-    operation(propriete->getValeurHypotheque());
-    d_proprietesHypothequees.push_back(propriete);
+void joueur::hypothequerPropriete(int index) {
+    operation(d_proprietes[index]->getValeurHypotheque());
+    d_proprietesHypothequees.push_back(d_proprietes[index]);
     d_proprietes.erase(d_proprietes.begin() + index);
 }
 
@@ -108,6 +108,16 @@ vector<propriete*> joueur::getProprietes(int type) const {
     for (int i = 0; i < d_proprietes.size(); ++i) {
         if (type == d_proprietes[i]->getType() || type == DT_ALL) {
             tableauTemporaire.push_back(d_proprietes[i]);
+        }
+    }
+    return tableauTemporaire;
+}
+
+vector<propriete*> joueur::getProprietesHypothequees(int type) const {
+    vector<propriete*> tableauTemporaire;
+    for (int i = 0; i < d_proprietesHypothequees.size(); ++i) {
+        if (type == d_proprietesHypothequees[i]->getType() || type == DT_ALL) {
+            tableauTemporaire.push_back(d_proprietesHypothequees[i]);
         }
     }
     return tableauTemporaire;

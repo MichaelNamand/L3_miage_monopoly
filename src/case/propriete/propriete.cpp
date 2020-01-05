@@ -127,7 +127,7 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                      cout << "Confirmer ? Vous recevrez " << selectionProp->getValeurHypotheque() << " euros pour "
                      << selectionProp->afficheCase() << "." << endl;
                      if (jeu::getConfirmationJoueur()) {
-                         j.hypothequerPropriete(selectionProp, index);
+                         j.hypothequerPropriete(index);
                          cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
                      } else choixActions(montantPaiement, j);
                 }

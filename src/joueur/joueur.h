@@ -34,6 +34,8 @@ public:
 
     vector<propriete*> getProprietes(int type) const;
 
+    vector<propriete*> getProprietesHypothequees(int type) const;
+
     void ajouterPropriete(propriete *propriete);
 
     bool acheterPropriete(propriete *p);
@@ -42,7 +44,7 @@ public:
 
     void vendrePropriete(joueur &j, int numeroPropriete, int prixDeVente);
 
-    void hypothequerPropriete(propriete *popriete, int index);
+    void hypothequerPropriete(int index);
 
     bool vendreMaisonsHotels(int nbMaison, int nbHotels, rue *r);
 

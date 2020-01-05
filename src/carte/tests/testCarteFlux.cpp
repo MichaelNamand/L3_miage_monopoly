@@ -2,26 +2,32 @@
 // Created by Administrator on 05.01.2020.
 //
 
-#include "doctest.h"
+#include "../../../includes/doctest.h"
+#include "../../joueur/joueur.h"
+#include "../carteFlux.h"
+#include "../carteAllerVers.h"
 
-TEST_CASE("tester methode lie a la classe CarteFlux"){
-int fluxArgent;
-int argentAvantFlux = j.getArgent;
+TEST_CASE ("tester methode lie a la classe CarteFlux") {
+    int fluxArgent;
 
-joueur j{"Testeur"};
+    joueur j{"Testeur"};
 
-    SUB_CASE("Deplacement sens normal"){
+
+
+            SUBCASE("Flux positiv") {
         fluxArgent = 200;
         carteFlux carte{"Deplacement", fluxArgent};
+        int argentAvantFlux = j.getArgent();
         carte.action(j);
-        REQUIERE_EQ(j.getIndexCase(), argentAvantFlux+fluxArgent);
+                REQUIRE_EQ(j.getArgent(), argentAvantFlux + fluxArgent);
     }
 
-    SUB_CASE("Deplacement sens inverse"){
+            SUBCASE("Flux negativ") {
         fluxArgent = -300;
         carteAllerVers carte{"Deplacement", fluxArgent};
+        int argentAvantFlux = j.getArgent();
         carte.action(j);
-        REQUIERE_EQ(j.getIndexCase(), argentAvantFlux+fluxArgent);
+                REQUIRE_EQ(j.getArgent(), argentAvantFlux + fluxArgent);
     }
 
 }
