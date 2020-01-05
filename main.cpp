@@ -3,6 +3,8 @@
 #include "src/joueur/joueur.h"
 #include "src/plateau/plateau.h"
 #include "src/jeu.h"
+#define DOCTEST_CONFIG_IMPLEMENT
+#include "./includes/doctest.h"
 
 using namespace std;
 vector<joueur> jeu::d_joueurs;
@@ -13,13 +15,13 @@ void afficherListeJoueurs(vector<joueur> &joueurs) {
         cout << i + 1 << ". " << joueurs[i].getNom() << endl;
     }
 }
-#ifdef USING_TEST_MAIN
+// #ifdef USING_TEST_MAIN
 int main() {
     plateau plateauMonopoly{};
     jeu j{plateauMonopoly};
     j.lancerJeu();
     return 0;
 }
-#endif
+// #endif
 
 

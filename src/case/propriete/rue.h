@@ -9,9 +9,6 @@
 
 
 class rue: public propriete {
-private:
-    int d_nbMaisons = 0;
-    int d_nbHotels = 0;
 
 public:
     rue(const string &nom, const string &couleur, int prix, const std::vector<int> &loyers, int nbMaxCouleur,
@@ -26,7 +23,10 @@ public:
     int getLoyer(joueur &j) const override;
     void action(joueur &j) override;
     string affichePropriete() const override;
+
 private:
+    int d_nbMaisons = 0;
+    int d_nbHotels = 0;
     groupeCouleur d_groupeCouleur;
     int d_prixMaisonHotel;
 
