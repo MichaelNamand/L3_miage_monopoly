@@ -14,14 +14,12 @@ private:
     int d_nbHotels = 0;
 
 public:
-    rue(const string &nom, const string &couleur, int valeurHypotheque, int prix, const std::vector<int> &loyers, int nbMaxCouleur,
-            int prixMaisonVente, int prixHotelVente, int prixMaisonAchat, int prixHotelAchat);
+    rue(const string &nom, const string &couleur, int prix, const std::vector<int> &loyers, int nbMaxCouleur,
+        int prixMaisonHotel);
     int getNbMaisons() const;
     int getNbHotels() const;
-    int getPrixMaisonVente() const;
-    int getPrixMaisonAchat() const;
-    int getPrixHotelVente() const;
-    int getPrixHotelAchat() const;
+    int getPrixMaisonHotelVente() const;
+    int getPrixMaisonHotelAchat() const;
     int getPrixVenteHotelsMaisons(int nbMaison, int nbHotels);
     int getPrixAchatHotelsMaisons(int nbMaison, int nbHotels);
     groupeCouleur &getGroupeCouleur();
@@ -30,10 +28,7 @@ public:
     string affichePropriete() const override;
 private:
     groupeCouleur d_groupeCouleur;
-    int d_prixMaisonVente;
-    int d_prixMaisonAchat;
-    int d_prixHotelVente;
-    int d_prixHotelAchat;
+    int d_prixMaisonHotel;
 
 };
 

@@ -7,15 +7,14 @@
 #include "rue.h"
 #include <iostream>
 
-propriete::propriete(const string &nom, int valeurHypotheque, int prix, const std::vector<int> &loyers, int type) :
+propriete::propriete(const string &nom, int prix, const std::vector<int> &loyers, int type) :
         caseMonopoly{nom, type},
         d_prix{prix},
         d_type{type},
-        d_valeurHypotheque{valeurHypotheque},
         d_loyers{loyers} {}
 
 int propriete::getValeurHypotheque() const {
-    return d_valeurHypotheque;
+    return d_prix / 2;
 }
 
 int propriete::getPrix() const {
@@ -109,8 +108,8 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                     if (rue* r = dynamic_cast<rue*>(selectionProp)) {
                         if (nbHotels > r->getNbHotels()) nbHotels = r->getNbHotels();
                         if (nbMaisons > r->getNbMaisons()) nbMaisons = r->getNbMaisons();
-                        cout << "Confirmer ? Vous recevrez (" << nbMaisons << " * " << r->getPrixMaisonVente() << ") + (" <<
-                            nbHotels * r->getPrixHotelVente() << ") = " << r->getPrixVenteHotelsMaisons(nbMaisons, nbHotels) << " euros pour "
+                        cout << "Confirmer ? Vous recevrez (" << nbMaisons << " * " << r->getPrixMaisonHotelVente() << ") + (" <<
+                            nbHotels * r->getPrixMaisonHotelVente() << ") = " << r->getPrixVenteHotelsMaisons(nbMaisons, nbHotels) << " euros pour "
                              << selectionProp->afficheCase() << "." << endl;
                         if (jeu::getConfirmationJoueur() && j.vendreMaisonsHotels(nbMaisons, nbHotels, r))
                             cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;

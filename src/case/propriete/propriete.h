@@ -13,14 +13,13 @@ using namespace std;
 
 class propriete : public caseMonopoly {
 private:
-    int d_valeurHypotheque;
     int d_prix;
 
 protected:
     vector<int> d_loyers;
     joueur *d_proprietaire;
 public:
-    propriete(const string &nom, int valeurHypotheque, int prix, const vector<int> &loyers, int type);
+    propriete(const string &nom, int prix, const vector<int> &loyers, int type);
     ~propriete();
     virtual int getLoyer(joueur &j) const = 0;
 

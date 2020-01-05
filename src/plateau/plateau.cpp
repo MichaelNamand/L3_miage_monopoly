@@ -3,12 +3,9 @@
 //
 
 #include "plateau.h"
-#include <fstream>
-#include <iostream>
 
 using namespace std;
 
-#include "../joueur/joueur.h"
 #include "../case/propriete/rue.h"
 #include "../case/pioche.h"
 #include "../carte/carteAllerEnPrison.h"
@@ -17,13 +14,14 @@ using namespace std;
 #include "../case/attente.h"
 
 plateau::plateau() {
-    d_cases.push_back(new rue{"Boulevard de Belleville", DT_MARRON, 30, 60, {1, 2, 4, 8}, 2, 100, 200, 50, 100});
+    d_cases.push_back(new rue{"Boulevard de Belleville", DT_MARRON, 60, {}, 2, 100});
     d_cases.push_back(new pioche{"Caisse de communaute", DT_COMMUNAUTE, this});
-    d_cases.push_back(new rue{"Rue Lecourbe", DT_MARRON, 40, 70, {2, 3, 5, 9}, 2, 100, 200, 50, 100});
-    d_cases.push_back(new servicePublic{"Compagnie de distribution d'electricite", 75, 140});
-    d_cases.push_back(new gare{"Gare de Lyon", 75, 140, {25, 50, 100, 200}});
+    d_cases.push_back(new rue{"Rue Lecourbe", DT_MARRON, 40, {2, 3, 5, 9}, 2, 100});
+    d_cases.push_back(new servicePublic{"Compagnie de distribution d'electricite", 75});
+    d_cases.push_back(new gare{"Gare de Lyon", 200, {25, 50, 100, 200}});
     d_cases.push_back(new pioche{"Chance", DT_CHANCE, this});
     d_cases.push_back(new attente{"Depart", DT_ATTENTE});
+    d_cases.push_back(new rue{"Rue de la Paix", DT_BLEU, 200, {50, 200, 600, 1400, 1700, 2000}, 2, 100});
 
     d_piocheChance.push(new carteAllerEnPrison{"Interpol vous a attrape. Allez en prison et ne passez pas par la case Depart"});
     d_piocheCaisseCommunaute.push(new carteAllerEnPrison{"Interpol vous a attrape. Allez en prison et ne passez pas par la case Depart"});

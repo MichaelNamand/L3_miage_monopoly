@@ -4,8 +4,8 @@
 
 #include "gare.h"
 
-gare::gare(const std::string &nom, int valeurHypotheque, int prix,const std::vector<int>&loyers):
-    propriete{nom, valeurHypotheque, prix, loyers, DT_GARE} {
+gare::gare(const std::string &nom, int prix,const std::vector<int>&loyers):
+    propriete{nom, prix, loyers, DT_GARE} {
 }
 
 void gare::action(joueur &j) {

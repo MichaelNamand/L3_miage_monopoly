@@ -4,8 +4,8 @@
 
 #include "servicePublic.h"
 
-servicePublic::servicePublic(const std::string &nom, int valeurHypotheque, int prix):
-    propriete{nom, valeurHypotheque, prix, {}, DT_SERVICE_PUBLIC}{
+servicePublic::servicePublic(const std::string &nom, int prix):
+    propriete{nom, prix, {}, DT_SERVICE_PUBLIC}{
 
 }
 
