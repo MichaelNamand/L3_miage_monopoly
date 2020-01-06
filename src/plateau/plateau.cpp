@@ -17,6 +17,7 @@ using namespace std;
 #include "../carte/carteFlux.h"
 #include "../carte/carteDeplacement.h"
 #include "../carte/carteAllerVers.h"
+#include "../case/fluxMonetaire.h"
 
 plateau::plateau() {
     vector<int> loyerGare = {25, 50, 100, 200};
@@ -28,12 +29,13 @@ plateau::plateau() {
     d_cases.push_back(new rue{"Boulevard de Belleville", DT_MARRON, 60, {2, 10, 30, 90, 160, 250}, 2, 50});
     d_cases.push_back(new pioche{"Caisse de communaute", DT_COMMUNAUTE, this});
     d_cases.push_back(new rue{"Rue Lecourbe", DT_MARRON, 60, {4, 20, 60, 180, 320, 450}, 2, 50});
+    d_cases.push_back(new fluxMonetaire{"Impots sur le revenu", DT_FLUX});
     d_cases.push_back(new gare{"Gare Montparnasse", 200, loyerGare});
     d_cases.push_back(new rue{"Rue de Vaugirard", DT_BLEU_CIEL, 100, {6, 30, 90, 270, 400, 550}, 3, 50});
     d_cases.push_back(new pioche{"Chance", DT_CHANCE, this});
     d_cases.push_back(new rue{"Rue de Courcelles", DT_BLEU_CIEL, 100, {6, 30, 90, 270, 400, 550}, 3, 50});
     d_cases.push_back(new rue{"Avenue de la République", DT_BLEU_CIEL, 120, {8, 40, 100, 300, 450, 600}, 3, 50});
-
+    d_cases.push_back(new attente{"Prison : Simple visite", DT_ATTENTE});
     d_cases.push_back(new rue{"Boulevard de la Villette", DT_ROSE, 140, {10, 50, 150, 450, 625, 750}, 3, 100});
     d_cases.push_back(new servicePublic{"Compagnie de distribution d'electricite", 140});
     d_cases.push_back(new rue{"Avenue de Neuilly", DT_ROSE, 140, {10, 50, 150, 450, 625, 750}, 3, 100});
@@ -61,6 +63,7 @@ plateau::plateau() {
     d_cases.push_back(new gare{"Gare Saint-Lazare", 200, loyerGare});
     d_cases.push_back(new pioche{"Chance", DT_CHANCE, this});
     d_cases.push_back(new rue{"Avenue des Champs-Elysees", DT_BLEU, 350, {35, 175, 500, 1100, 1300, 1500}, 2, 200});
+    d_cases.push_back(new fluxMonetaire{"Taxe de luxe", DT_FLUX});
     d_cases.push_back(new rue{"Rue de la Paix", DT_BLEU, 400, {50, 200, 600, 1400, 1700, 2000}, 2, 200});
 
 
@@ -92,7 +95,6 @@ plateau::plateau() {
     d_piocheChance.push(new carteAllerEnPrison{"Allez en Prison. Ne passez pas par la case depart, ne recevez pas 200 euros"});
     d_piocheChance.push(new carteSortiePrison{"Vous etes libere de prison. Cette carte peut etre conservee jusqu'a ce qu'elle soit utilisee"});
     d_piocheChance.push(new carteFlux{"Votre immeuble et votre pret rapportent. Touchez 150 euros", 150});
-
 }
 
 vector<caseMonopoly> plateau::proprietesRestantes() const {

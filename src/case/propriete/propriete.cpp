@@ -129,14 +129,19 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                             choixProprietes.push_back("Nom : " + prop->afficheCase() + " Valeur hypothequaire : " +
                                                       to_string(prop->getValeurHypotheque()) + " euros");
                         }
+                        choixProprietes.emplace_back("Retour");
                         int index = jeu::afficherEtRecupererChoix(message, choixProprietes) - 1;
-                        propriete *selectionProp = j.getProprietes(DT_ALL)[index];
-                        cout << "Confirmer ? Vous recevrez " << selectionProp->getValeurHypotheque() << " euros pour "
-                             << selectionProp->afficheCase() << "." << endl;
-                        if (jeu::getConfirmationJoueur()) {
-                            j.hypothequerPropriete(index);
-                            cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
-                        } else choixActions(montantPaiement, j);
+                        if (index == choixProprietes.size() - 1) {
+                            choixActions(montantPaiement, j);
+                        } else {
+                            propriete *selectionProp = j.getProprietes(DT_ALL)[index];
+                            cout << "Confirmer ? Vous recevrez " << selectionProp->getValeurHypotheque() << " euros pour "
+                                 << selectionProp->afficheCase() << "." << endl;
+                            if (jeu::getConfirmationJoueur()) {
+                                j.hypothequerPropriete(index);
+                                cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
+                            } else choixActions(montantPaiement, j);
+                        }
                     }
                 }
                     break;

@@ -68,7 +68,6 @@ void jeu::lancerJeu() {
     }
 
     cout << "***********************LA PARTIE COMMENCE***********************" << endl;
-    // plateau d_plateau{};
     int tourJoueur = 0;
     d_joueurs = joueurs;
     while (d_joueurs.size() != 1) {
@@ -259,7 +258,7 @@ void jeu::gererTourJoueur(joueur &j) {
                 }
             }
             if (!j.estEnPrison()) {
-                j.deplacerDe(j.getIndexCase() + valeurDes[0] + valeurDes[1]);
+                j.deplacerDe(valeurDes[0] + valeurDes[1]);
                 d_plateau.getCase(j.getIndexCase()).action(j);
             }
         }
