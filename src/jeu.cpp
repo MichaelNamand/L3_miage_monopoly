@@ -87,6 +87,7 @@ void jeu::lancerJeu() {
         }
         gererTourJoueur(j);
     }
+    cout << "La victoire revient a " << jeu::d_joueurs[0].getNom() << " !";
 }
 
 jeu::jeu(plateau &plateau) : d_plateau{plateau} {

@@ -13,13 +13,13 @@ void afficherListeJoueurs(vector<joueur> &joueurs) {
         cout << i + 1 << ". " << joueurs[i].getNom() << endl;
     }
 }
-//#ifdef USING_TEST_MAIN
+// #ifdef USING_TEST_MAIN
 int main() {
     plateau plateauMonopoly{};
     jeu j{plateauMonopoly};
     j.lancerJeu();
     return 0;
 }
-//#endif
+// #endif
 
 

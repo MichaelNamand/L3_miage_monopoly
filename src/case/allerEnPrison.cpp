@@ -17,7 +17,7 @@ allerEnPrison::allerEnPrison(const string& nom, int type): caseMonopoly{nom,type
 allerEnPrison::~allerEnPrison() {}
 
 void allerEnPrison::action(joueur& j) {
-    cout<<j.getNom()<<" va en prison !";
+    cout<<"Vous tombez sur la case Aller en prison. " << j.getNom()<<" va en prison !" << endl;
     j.setEnPrison(true);
     j.setIndexCase(10);
 }

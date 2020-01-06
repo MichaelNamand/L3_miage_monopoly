@@ -108,7 +108,7 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
         } else {
             string question = "Cette case appartient a " + d_proprietaire->getNom() + ". Vous lui devez : " + std::to_string(montantPaiement)
                               + " euros. Comment souhaitez-vous regler ? Votre solde est de " + std::to_string(j.getArgent()) + " euros.";
-            vector<string> choix = {"Avec mon solde" ,"En hypothequant", "En vendant mes maisons/hotels" };
+            vector<string> choix = {"Avec mon solde" ,"En hypothequant", "En vendant mes maisons/hotels", "Abandonner" };
             selection = jeu::afficherEtRecupererChoix(question, choix);
             switch (selection) {
                 case 1:
@@ -118,21 +118,26 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                     } else choixActions(montantPaiement, j);
                     break;
                 case 2:{
-                    string message = "Voici la liste de vos proprietes avec leurs valeurs hypothequaires. Selectionnez-en jusqu'a obtenir"
-                                     " un solde suffisant pour payer vos dettes :";
-                    vector<string> choixProprietes;
-                    for (auto &prop : j.getProprietes(DT_ALL)) {
-                        choixProprietes.push_back("Nom : " + prop->afficheCase() + " Valeur hypothequaire : " +
-                                                  to_string(prop->getValeurHypotheque()) + " euros");
+                    if (j.getProprietes(DT_ALL).empty()) {
+                        cout << "Vous n'avez aucune propriete a hypothequer !" << endl;
+                        choixActions(montantPaiement, j);
+                    } else {
+                        string message = "Voici la liste de vos proprietes avec leurs valeurs hypothequaires. Selectionnez-en jusqu'a obtenir"
+                                         " un solde suffisant pour payer vos dettes :";
+                        vector<string> choixProprietes;
+                        for (auto &prop : j.getProprietes(DT_ALL)) {
+                            choixProprietes.push_back("Nom : " + prop->afficheCase() + " Valeur hypothequaire : " +
+                                                      to_string(prop->getValeurHypotheque()) + " euros");
+                        }
+                        int index = jeu::afficherEtRecupererChoix(message, choixProprietes) - 1;
+                        propriete *selectionProp = j.getProprietes(DT_ALL)[index];
+                        cout << "Confirmer ? Vous recevrez " << selectionProp->getValeurHypotheque() << " euros pour "
+                             << selectionProp->afficheCase() << "." << endl;
+                        if (jeu::getConfirmationJoueur()) {
+                            j.hypothequerPropriete(index);
+                            cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
+                        } else choixActions(montantPaiement, j);
                     }
-                    int index = jeu::afficherEtRecupererChoix(message, choixProprietes) - 1;
-                    propriete *selectionProp = j.getProprietes(DT_ALL)[index];
-                    cout << "Confirmer ? Vous recevrez " << selectionProp->getValeurHypotheque() << " euros pour "
-                         << selectionProp->afficheCase() << "." << endl;
-                    if (jeu::getConfirmationJoueur()) {
-                        j.hypothequerPropriete(index);
-                        cout << "L'operation a reussi. Votre nouveau solde est maintenant de " << j.getArgent() << " euros." << endl;
-                    } else choixActions(montantPaiement, j);
                 }
                     break;
                 case 3: {
@@ -158,6 +163,18 @@ void propriete::choixActions(int montantPaiement, joueur &j) {
                     } else choixActions(montantPaiement, j);
                 }
                     break;
+                case 4: {
+                    cout << "Appuyer sur -o pour confirmer votre abandon ou -a ou annuler : ";
+                    if (jeu::getConfirmationJoueur()) {
+                        cout << "Le joueur " << j.getNom() << " a abandonne !" << endl;
+                        for (int i = 0; i < jeu::d_joueurs.size(); i++) {
+                            if (jeu::d_joueurs[i].getNom() == j.getNom()) {
+                                jeu::d_joueurs.erase(jeu::d_joueurs.begin() + i);
+                                return;
+                            }
+                        }
+                    }
+                }
                 default:
                     std::cout << "Votre choix n'est pas valide." << std::endl;
             }
